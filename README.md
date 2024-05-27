@@ -7,6 +7,9 @@ In order to run the system, you need to Docker on your machine/server. \
 Please refer to: https://docs.docker.com/engine/install/
 
 ```bash
+# To build and run project
+$ make build-and-run
+
 # To build project
 $ make build
 
