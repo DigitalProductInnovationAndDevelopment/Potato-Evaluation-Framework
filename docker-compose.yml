@@ -1,0 +1,30 @@
+name: 'karevo-dashboard'
+
+services:
+  backend:
+    build: ./backend
+    container_name: karevo-dashboard-api
+    ports:
+      - '8080:8080'
+
+  frontend:
+    build: ./frontend
+    container_name: karevo-dashboard-web
+    ports:
+      - '3000:3000'
+
+  database:
+    image: mongo:6.0
+    container_name: karevo-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGODB_ROOT_USERNAME: karevo
+      MONGODB_ROOT_PASSWORD: raFWD4Jr4ysCMn4oo138
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
+    driver: local
+
