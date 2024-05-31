@@ -1,24 +1,21 @@
-import logo from './logo.svg';
+//import Icons
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'remixicon/fonts/remixicon.css'
+
+//Import Bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js'
+
 import './App.css';
+import Header from './components/Header';
+import SideBar from './components/SideBar';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Karevo Dashboard
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <>
+  <Header />
+  <SideBar />
+  </>
   );
 }
 
