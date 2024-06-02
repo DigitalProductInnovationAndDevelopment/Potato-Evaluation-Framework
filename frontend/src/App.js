@@ -7,15 +7,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js'
 
 import './App.css';
-import Header from './components/Header';
-import SideBar from './components/SideBar';
+import Header from './components/header/Header';
+import SideBar from './components/sidebar/SideBar';
+import SignInPage from "./components/signin/signin";
+import {useState} from "react";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLogin = (status) => {
+        setIsLoggedIn(status);
+    };
+
   return (
-  <>
-  <Header />
-  <SideBar />
-  </>
+      <>
+        {isLoggedIn ? (
+            <>
+              <Header />
+              <SideBar />
+            </>
+        ) : (
+            <SignInPage onLogin={handleLogin} />
+        )}
+      </>
   );
 }
 
