@@ -6,6 +6,8 @@ services:
     container_name: karevo-dashboard-api
     ports:
       - '8080:8080'
+    environment:
+      MONGO_URI: mongodb://karevo:raFWD4Jr4ysCMn4oo138@database:27017/karevo-dashboard
 
   frontend:
     build: ./frontend
