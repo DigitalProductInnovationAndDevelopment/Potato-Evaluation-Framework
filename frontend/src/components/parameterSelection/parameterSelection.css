@@ -1,0 +1,36 @@
+.dashboard-container {
+    width: 300px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    bottom: 200px;
+    left: 200px; 
+  }
+  
+  .dashboard-header {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+  }
+  
+  .parameter-box {
+    margin-bottom: 16px;
+  }
+  
+  .parameter-name {
+    margin-bottom: 8px;
+  }
+  
+  .parameter-slider {
+    margin-bottom: 8px;
+  }
+  
+  .apply-button {
+    margin-top: 16px;
+    background-color: #1976d2;
+    color: white;
+  }
+  
+  .apply-button:hover {
+    background-color: #1565c0;
+  }
+  
