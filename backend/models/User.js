@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    name: {
+    email: {
         type: String,
-        required: [true, 'Username is required.'],
+        required: [true, 'Email is required.'],
         unique: true,
         trim: true,
         lowercase: true
@@ -13,13 +13,10 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Password is required.'],
         trim: true
     },
-    email: {
-        type: String,
-        required: [true, 'Email is required.'],
-        unique: true,
-        trim: true,
-        lowercase: true
-    }         
+    isAdmin: {
+        type: Boolean,
+        default: false
+    }               
 });
 
 
