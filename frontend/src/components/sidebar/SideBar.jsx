@@ -17,6 +17,12 @@ function SideBar() {
                 <span>Tracking History</span>
             </a>
         </li>
+        <li className="nav-item">
+            <a href="/frontend/public" className="nav-link">
+                <i className="bi bi-grid"></i>
+                <span>How to?</span>
+            </a>
+        </li>
     </ul>
   </aside>);
 }

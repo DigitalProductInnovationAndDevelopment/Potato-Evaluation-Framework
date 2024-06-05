@@ -10,6 +10,7 @@ import './App.css';
 import Header from './components/header/Header';
 import SideBar from './components/sidebar/SideBar';
 import SignInPage from "./components/signin/signin";
+import ParameterSelection from "./components/parameterSelection/parameterSelection";
 import {useState} from "react";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         {isLoggedIn ? (
             <>
               <Header />
+              <ParameterSelection/>
               <SideBar />
             </>
         ) : (
