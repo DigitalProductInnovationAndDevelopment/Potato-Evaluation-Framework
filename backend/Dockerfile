@@ -9,6 +9,9 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
+COPY scripts/seed.js ./scripts/seed.js
+COPY scripts/start.js ./scripts/start.js
+
 # Install the dependencies
 RUN npm install
 
@@ -19,4 +22,5 @@ COPY . .
 EXPOSE 8080
 
 # Command to run the application
-CMD ["node", "index.js"]
+CMD ["node", "scripts/start.js"]
+
