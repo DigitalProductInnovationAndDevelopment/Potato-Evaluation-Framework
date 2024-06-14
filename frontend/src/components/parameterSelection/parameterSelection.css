@@ -33,4 +33,7 @@
   .apply-button:hover {
     background-color: #1565c0;
   }
+  .custom-textfield {
+    width: 50px; /* Adjust the width as needed */
+  }
   

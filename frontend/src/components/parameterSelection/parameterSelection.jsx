@@ -3,9 +3,15 @@ import { Slider, TextField, Button, Typography, Box } from '@mui/material';
 
 const Dashboard = () => {
   const [parameters, setParameters] = useState([
-    { name: 'Parameter 1', value: 50 },
-    { name: 'Parameter 2', value: 50 },
-    { name: 'Parameter 3', value: 50 }
+    { name: 'Greening', value: 0.2 },
+    { name: 'Dry Rot', value: 0.1 },
+    { name: 'Wet Rot', value: 0.0 },
+    { name: 'Wire Worm', value: 0.0 },
+    { name: 'Malformed', value: 0.7 },
+    { name: 'Growth Crack', value: 0.1 },
+    { name: 'Mechanical Damage 2', value: 0.0 },
+    { name: 'Dirt Clod', value: 0.0 },
+    { name: 'Stone', value: 0.0 }
   ]);
 
   const handleSliderChange = (index, newValue) => {
@@ -25,8 +31,8 @@ const Dashboard = () => {
   };
 
   return (
-    <Box sx={{ width: 300, margin: 45, padding: 2, border: '1px solid #ccc', borderRadius: 2 }}>
-      <Typography variant="h6" gutterBottom>
+    <Box sx={{ width: 400, marginTop: 10, marginLeft: 40, padding: 2, border: '1px solid #ccc', borderRadius: 2 }}>
+      <Typography variant="h6" gutterBottom fontWeight="bold">
         Parameter Selection
       </Typography>
       {parameters.map((param, index) => (
@@ -36,19 +42,26 @@ const Dashboard = () => {
             value={typeof param.value === 'number' ? param.value : 0}
             onChange={(event, newValue) => handleSliderChange(index, newValue)}
             aria-labelledby="input-slider"
-            min={0}
-            max={100}
+            step={0.1}
+            min={0.0}
+            max={1.0}
           />
           <TextField
             value={param.value}
-            margin="dense"
             onChange={(event) => handleInputChange(index, event)}
             inputProps={{
-              step: 1,
-              min: 0,
-              max: 100,
+              step: 0.1,
+              min: 0.0,
+              max: 1.0,
               type: 'number',
               'aria-labelledby': 'input-slider'
+            }}
+            style={{
+              width: '80px',      
+              height: '50px', 
+              margin: '5px',
+              color: '#333',
+              fontSize: '16px',
             }}
           />
         </Box>
