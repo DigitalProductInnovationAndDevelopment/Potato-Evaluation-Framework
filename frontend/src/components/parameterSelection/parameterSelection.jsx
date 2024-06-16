@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Slider, TextField, Button, Typography, Box } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard = () => {
   const [parameters, setParameters] = useState([
@@ -15,6 +17,10 @@ const Dashboard = () => {
     { name: 'Stone', value: 0.0 }
   ]);
 
+  const [loading, setLoading] = useState(false);
+  const [responseMessage, setResponseMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const handleSliderChange = (index, newValue) => {
     const newParameters = [...parameters];
     newParameters[index].value = newValue;
@@ -28,6 +34,8 @@ const Dashboard = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
+    setResponseMessage('');
     try {
       const response = await axios.post('http://localhost:8080/parameters/update', parameters, {
         headers: {
@@ -35,8 +43,25 @@ const Dashboard = () => {
         }
       });
       console.log('Response:', response.data);
+      console.log('Response Status:', response.status);
+      
+      if (response.status === 200) {
+        setIsSuccess(true);
+        setResponseMessage('Success! Your request was processed.');
+      } else if (response.status === 500) {
+        setIsSuccess(false);
+        setResponseMessage('Error! Server encountered an issue.');
+      } else {
+        setIsSuccess(false);
+        setResponseMessage('Error! Something went wrong.');
+      }  
     } catch (error) {
-      console.error('Error:', error);
+      //console.error('Error:', error);
+      setIsSuccess(false);
+      setResponseMessage('Error! Something went wrong.');
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -76,9 +101,13 @@ const Dashboard = () => {
           />
         </Box>
       ))}
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Apply
+      <Button variant="contained" color="primary" onClick={handleSubmit} disabled={loading}>
+      {loading && <FontAwesomeIcon icon={faSpinner} spin style={{ marginRight: '8px' }} />}
+      {loading ? 'Loading...' : 'Apply'}
       </Button>
+      {responseMessage && (
+        <p style={{ color: isSuccess ? 'green' : 'red' }}>{responseMessage}</p>
+      )}
     </Box>
   );
 };
