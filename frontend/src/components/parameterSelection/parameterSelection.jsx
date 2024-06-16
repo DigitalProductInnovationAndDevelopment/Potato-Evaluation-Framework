@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Slider, TextField, Button, Typography, Box } from '@mui/material';
 
 const Dashboard = () => {
@@ -26,8 +27,17 @@ const Dashboard = () => {
     setParameters(newParameters);
   };
 
-  const handleSubmit = () => {
-    console.log('Parameters:', parameters);
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/parameters/update', parameters, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -57,8 +67,8 @@ const Dashboard = () => {
               'aria-labelledby': 'input-slider'
             }}
             style={{
-              width: '80px',      
-              height: '50px', 
+              width: '80px',
+              height: '50px',
               margin: '5px',
               color: '#333',
               fontSize: '16px',
