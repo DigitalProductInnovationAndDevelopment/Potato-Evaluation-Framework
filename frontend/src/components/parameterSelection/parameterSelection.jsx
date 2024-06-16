@@ -28,8 +28,16 @@ const Dashboard = () => {
   };
 
   const handleSubmit = async () => {
+    const formattedParameters = {
+      dynamic_defekt_proportion_thresholds: parameters.reduce((acc, param) => {
+        const key = param.name.toLowerCase().replace(/ /g, '_');
+        acc[key] = param.value;
+        return acc;
+      }, {})
+    };
+
     try {
-      const response = await axios.post('http://localhost:8080/parameters/update', parameters, {
+      const response = await axios.post('http://localhost:8080/parameters/update', formattedParameters, {
         headers: {
           'Content-Type': 'application/json'
         }
