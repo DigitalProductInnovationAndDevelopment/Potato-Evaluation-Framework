@@ -1,37 +1,37 @@
 {
-    "paramerters": {
-        "dynamic_defekt_proportion_thresholds":{
+    "parameters": {
+        "dynamic_defekt_proportion_thresholds": {
             "greening": 0.2,
             "dry_rot": 0.1,
-            "wet_rot": 0.0,
-            "wire_worm": 0.0,
+            "wet_rot": 0,
+            "wire_worm": 0,
             "malformed": 0.7,
-            "growth_crack": 0.1,
-            "mechanical_damage": 0.0,
-            "dirt_clod": 0.0,
-            "stone": 0.0
+            "growth_crack": 0.4,
+            "mechanical_damage": 0.3,
+            "dirt_clod": 0.3,
+            "stone": 0.5
         },
-        "preset_0":{
+        "preset_0": {
             "greening": 0.2,
             "dry_rot": 0.1,
-            "wet_rot": 0.0,
-            "wire_worm": 0.0,
+            "wet_rot": 0,
+            "wire_worm": 0,
             "malformed": 0.7,
             "growth_crack": 0.1,
-            "mechanical_damage": 0.0,
-            "dirt_clod": 0.0,
-            "stone": 0.0
+            "mechanical_damage": 0,
+            "dirt_clod": 0,
+            "stone": 0
         },
-        "preset_1":{
+        "preset_1": {
             "greening": 0.2,
             "dry_rot": 0.1,
-            "wet_rot": 0.0,
-            "wire_worm": 0.0,
+            "wet_rot": 0,
+            "wire_worm": 0,
             "malformed": 0.7,
             "growth_crack": 0.1,
-            "mechanical_damage": 0.0,
-            "dirt_clod": 0.0,
-            "stone": 0.0
+            "mechanical_damage": 0,
+            "dirt_clod": 0,
+            "stone": 0
         }
     }
 }
