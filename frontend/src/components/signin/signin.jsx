@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from "axios";
+
 import './signin.css';
 
 const SignInPage = ({ onLogin }) => {
@@ -6,15 +8,30 @@ const SignInPage = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (!email || !password) {
             setError('Please fill in both fields');
         } else if (!validateEmail(email)) {
             setError('Please enter a valid email address');
         } else {
             setError('');
-            // Simulate login action
-            onLogin(true);
+            try {
+                const response = await axios.post('http://localhost:8080/users/login', { email, password });
+
+                if (response.status === 200) {
+                    onLogin(true);
+                } else {
+                    setError(response.data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.log(error);
+                if (error.response) {
+                    setError(error.response.data.message || 'Login failed');
+                } else {
+                    // Network error or other issues
+                    setError('An error occurred. Please try again.');
+                }
+            }
         }
     };
 

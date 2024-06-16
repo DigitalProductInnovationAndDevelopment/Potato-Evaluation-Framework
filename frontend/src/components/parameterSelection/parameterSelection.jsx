@@ -10,7 +10,7 @@ const Dashboard = () => {
     { name: 'Wire Worm', value: 0.0 },
     { name: 'Malformed', value: 0.7 },
     { name: 'Growth Crack', value: 0.1 },
-    { name: 'Mechanical Damage 2', value: 0.0 },
+    { name: 'Mechanical Damage', value: 0.0 },
     { name: 'Dirt Clod', value: 0.0 },
     { name: 'Stone', value: 0.0 }
   ]);

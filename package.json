@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "axios": "^1.7.2"
-  }
-}
