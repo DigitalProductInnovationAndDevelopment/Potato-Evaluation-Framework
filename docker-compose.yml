@@ -7,15 +7,19 @@ services:
     ports:
       - '8080:8080'
     environment:
-      MONGO_URI: mongodb://karevo:raFWD4Jr4ysCMn4oo138@database:27017/karevo-dashboard
+      MONGO_URI: mongodb://karevo:raFWD4Jr4ysCMn4oo138@database:27017/karevo-dashboard?authSource=admin
     depends_on:
       - database
+    networks:
+      - karevo-network
 
   frontend:
     build: ./frontend
     container_name: karevo-dashboard-web
     ports:
       - '3000:3000'
+    networks:
+      - karevo-network
 
   database:
     image: mongo:6.0
@@ -23,11 +27,15 @@ services:
     ports:
       - "27017:27017"
     environment:
-      MONGODB_ROOT_USERNAME: karevo
-      MONGODB_ROOT_PASSWORD: raFWD4Jr4ysCMn4oo138
+      MONGO_INITDB_ROOT_USERNAME: karevo
+      MONGO_INITDB_ROOT_PASSWORD: raFWD4Jr4ysCMn4oo138
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - karevo-network
 
 volumes:
   mongodb_data:
-    driver: local
+
+networks:
+  karevo-network:
