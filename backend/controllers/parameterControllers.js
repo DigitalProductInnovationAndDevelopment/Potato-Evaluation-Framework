@@ -9,7 +9,6 @@ const filePath = path.join(__dirname, "../models/parameters.json");
 
 const updateParameters = async (req, res) => {
   const { dynamic_defekt_proportion_thresholds } = req.body;
-  console.log(dynamic_defekt_proportion_thresholds);
 
   try {
     // Read the existing parameters from the file
