@@ -9,7 +9,7 @@ const Dashboard = () => {
     const fetchParameters = async () => {
       try {
         const response = await axios.get('http://localhost:8080/parameters');
-        const fetchedParameters = response.data.parameters.dynamic_defekt_proportion_thresholds
+        const fetchedParameters = response.data
         const formattedParameters = Object.keys(fetchedParameters).map((key) => ({
           name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
           value: fetchedParameters[key]
