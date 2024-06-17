@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Slider, TextField, Button, Typography, Box } from '@mui/material';
 
 const Dashboard = () => {
-  const [parameters, setParameters] = useState([
-    { name: 'Greening', value: 0.2 },
-    { name: 'Dry Rot', value: 0.1 },
-    { name: 'Wet Rot', value: 0.0 },
-    { name: 'Wire Worm', value: 0.0 },
-    { name: 'Malformed', value: 0.7 },
-    { name: 'Growth Crack', value: 0.1 },
-    { name: 'Mechanical Damage', value: 0.0 },
-    { name: 'Dirt Clod', value: 0.0 },
-    { name: 'Stone', value: 0.0 }
-  ]);
+  const [parameters, setParameters] = useState([]);
+
+  useEffect(() => {
+    const fetchParameters = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/parameters');
+        const fetchedParameters = response.data.parameters.dynamic_defekt_proportion_thresholds
+        const formattedParameters = Object.keys(fetchedParameters).map((key) => ({
+          name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+          value: fetchedParameters[key]
+        }));
+        setParameters(formattedParameters);
+      } catch (error) {
+        console.error('Error fetching parameters:', error);
+      }
+    };
+
+    fetchParameters();
+  }, []);
 
   const handleSliderChange = (index, newValue) => {
     const newParameters = [...parameters];
