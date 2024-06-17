@@ -30,11 +30,16 @@ function App() {
         setIsLoggedIn(status);
     };
 
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem('isLoggedIn');
+    };
+
   return (
       <>
         {isLoggedIn ? (
             <>
-              <Header />
+                <Header onLogout={handleLogout} />
               <ParameterSelection/>
               <SideBar />
             </>
