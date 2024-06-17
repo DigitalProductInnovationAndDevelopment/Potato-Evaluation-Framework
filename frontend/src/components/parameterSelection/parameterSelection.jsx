@@ -81,7 +81,7 @@ const Dashboard = () => {
     // Clear the response message after 6 seconds
     setTimeout(() => {
       setResponseMessage('');
-    }, 6000);
+    }, 5000);
   };
 
   return (
