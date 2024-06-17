@@ -11,4 +11,20 @@
     font-size: 32px;
     cursor: pointer;
     color: #012970;
+    font-family: 'Nunito', sans-serif;
+}
+
+.logout-button {
+    background-color: #4154f1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.logout-button:hover {
+    background-color: #2e40d1;
 }
