@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Slider, TextField, Button, Typography, Box } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard = () => {
   const [parameters, setParameters] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [responseMessage, setResponseMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     const fetchParameters = async () => {
       try {
         const response = await axios.get('http://localhost:8080/parameters');
-        const fetchedParameters = response.data
+        const fetchedParameters = response.data;
         const formattedParameters = Object.keys(fetchedParameters).map((key) => ({
           name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
           value: fetchedParameters[key]
@@ -36,6 +41,10 @@ const Dashboard = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
+    setResponseMessage('');
+    debugger;
+
     const formattedParameters = {
       dynamic_defekt_proportion_thresholds: parameters.reduce((acc, param) => {
         const key = param.name.toLowerCase().replace(/ /g, '_');
@@ -51,9 +60,28 @@ const Dashboard = () => {
         }
       });
       console.log('Response:', response.data);
+      if (response.status === 200) {
+        setIsSuccess(true);
+        setResponseMessage('Success! Your request was processed.');
+      } else if (response.status === 500) {
+        setIsSuccess(false);
+        setResponseMessage('Error! Server encountered an issue.');
+      } else {
+        setIsSuccess(false);
+        setResponseMessage('Error! Something went wrong.');
+      }
     } catch (error) {
       console.error('Error:', error);
+      setIsSuccess(false);
+      setResponseMessage('Error! Something went wrong.');
+    } finally {
+      setLoading(false);
     }
+
+    // Clear the response message after 6 seconds
+    setTimeout(() => {
+      setResponseMessage('');
+    }, 6000);
   };
 
   return (
@@ -92,9 +120,13 @@ const Dashboard = () => {
           />
         </Box>
       ))}
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Apply
+      <Button variant="contained" color="primary" onClick={handleSubmit} disabled={loading}>
+        {loading && <FontAwesomeIcon icon={faSpinner} spin style={{ marginRight: '8px' }} />}
+        {loading ? 'Loading...' : 'Apply'}
       </Button>
+      {responseMessage && (
+        <p style={{ color: isSuccess ? 'green' : 'red' }}>{responseMessage}</p>
+      )}
     </Box>
   );
 };
