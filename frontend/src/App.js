@@ -1,3 +1,5 @@
+import {useEffect, useState} from "react";
+
 //import Icons
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'remixicon/fonts/remixicon.css'
@@ -11,10 +13,18 @@ import Header from './components/header/Header';
 import SideBar from './components/sidebar/SideBar';
 import SignInPage from "./components/signin/signin";
 import ParameterSelection from "./components/parameterSelection/parameterSelection";
-import {useState} from "react";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        // Check if the user is already logged in by reading from local storage
+        const storedLoginStatus = localStorage.getItem('isLoggedIn');
+        return storedLoginStatus === 'true';
+    });
+
+    useEffect(() => {
+        // Save login status to local storage whenever it changes
+        localStorage.setItem('isLoggedIn', isLoggedIn);
+    }, [isLoggedIn]);
 
     const handleLogin = (status) => {
         setIsLoggedIn(status);
