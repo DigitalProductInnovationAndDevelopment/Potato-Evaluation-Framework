@@ -7,10 +7,8 @@ const ParametersSchema = require("../models/parameters");
 // Define the path to your parameters.json file
 const filePath = path.join(__dirname, "../models/parameters.json");
 
-
 const updateParameters = async (req, res) => {
   const { dynamic_defekt_proportion_thresholds } = req.body;
-  console.log(dynamic_defekt_proportion_thresholds);
 
   try {
     // Read the existing parameters from the file
@@ -38,6 +36,17 @@ const updateParameters = async (req, res) => {
   }
 };
 
+const getParameters = async (req, res) => {
+  try {
+    // Read the existing parameters from the file
+    const data = await fs.readFile(filePath, "utf8");
+    const parameters = JSON.parse(data);
+    res.status(200).json(parameters.parameters.dynamic_defekt_proportion_thresholds);
+  } catch (err) {
+    res.status(500).json({ message: "Error reading parameters file", error: err });
+  }
+};
+
 const validateParameters = (params, schema) => {
   const validateObject = (obj, schema) => {
     return Object.keys(schema).every((key) => {
@@ -58,4 +67,4 @@ const validateParameters = (params, schema) => {
   return validateObject(params, schema);
 };
 
-module.exports = { updateParameters };
+module.exports = { updateParameters, getParameters };
