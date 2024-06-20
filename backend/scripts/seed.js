@@ -3,7 +3,7 @@ const User = require('../models/User');
 require('dotenv').config();
 
 const seedUsers = async () => {
-  try {
+  try {    
     await mongoose.connect(process.env.MONGO_URI);
 
     const admin = await User.findOne({ isAdmin: true });

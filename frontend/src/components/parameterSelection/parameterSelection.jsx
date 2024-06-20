@@ -10,10 +10,16 @@ const Dashboard = () => {
   const [responseMessage, setResponseMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
+
   useEffect(() => {
     const fetchParameters = async () => {
+      const token = localStorage.getItem('token');
       try {
-        const response = await axios.get('http://localhost:8080/parameters');
+        const response = await axios.get('http://localhost:8080/parameters', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         const fetchedParameters = response.data;
         const formattedParameters = Object.keys(fetchedParameters).map((key) => ({
           name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
@@ -54,9 +60,11 @@ const Dashboard = () => {
     };
 
     try {
+      const token = localStorage.getItem('token');
       const response = await axios.post('http://localhost:8080/parameters/update', formattedParameters, {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         }
       });
       console.log('Response:', response.data);

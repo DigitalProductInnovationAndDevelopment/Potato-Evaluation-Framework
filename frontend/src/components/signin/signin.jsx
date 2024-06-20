@@ -19,6 +19,8 @@ const SignInPage = ({ onLogin }) => {
                 const response = await axios.post('http://localhost:8080/users/login', { email, password });
 
                 if (response.status === 200) {
+                    const token = response.data.token;
+                    localStorage.setItem('token', token); 
                     onLogin(true);
                 } else {
                     setError(response.data.message || 'Login failed');
