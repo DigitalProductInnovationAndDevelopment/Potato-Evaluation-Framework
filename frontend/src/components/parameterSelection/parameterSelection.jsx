@@ -3,8 +3,9 @@ import axios from 'axios';
 import { Slider, TextField, Button, Typography, Box } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import './parameterSelection.css';
 
-const Dashboard = () => {
+const ParameterSelection = () => {
   const [parameters, setParameters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
@@ -93,7 +94,8 @@ const Dashboard = () => {
   };
 
   return (
-    <Box sx={{ width: 400, marginTop: 10, marginLeft: 40, padding: 2, border: '1px solid #ccc', borderRadius: 2 }}>
+    <div className="parameter-selection">
+    <Box sx={{ width: 400, marginTop: 10, marginLeft: 40, padding: 2, border: '1px solid #ccc', borderRadius: 2, backgroundColor: '#ffffff' }}>
       <Typography variant="h6" gutterBottom fontWeight="bold">
         Parameter Selection
       </Typography>
@@ -136,7 +138,8 @@ const Dashboard = () => {
         <p style={{ color: isSuccess ? 'green' : 'red' }}>{responseMessage}</p>
       )}
     </Box>
+    </div>
   );
 };
 
-export default Dashboard;
+export default ParameterSelection;

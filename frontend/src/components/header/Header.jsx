@@ -5,7 +5,7 @@ import Nav from '../navigator/Nav'
 
 const Header = ({ onLogout }) => {
   return (
-      <header id='header' className='header fixed-top d-flex align-items-center'>
+      <header id='header' className='header d-flex align-items-center'>
           {/* {logo} */}
           <Logo/>
           {/* {search bar} */}

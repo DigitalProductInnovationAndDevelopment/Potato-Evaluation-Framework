@@ -1,0 +1,17 @@
+#dashboard {
+    transition: all 0.3s;
+    flex: 1; /* Adjust padding as needed */
+}
+
+@media (max-width: 1199px) {
+    #dashboard {
+        padding: 20px;
+    }
+
+}
+
+.toggle-dashboard .dashboard{
+    flex: 0; /* Adjust padding as needed */
+    margin-left: -300px;
+  }
+  
