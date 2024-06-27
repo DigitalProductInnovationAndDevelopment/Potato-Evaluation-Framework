@@ -119,11 +119,11 @@ const ParameterSelection = () => {
             style={{ marginLeft: 'auto' }}
           >
             <MenuItem value="">
-              <em>None</em>
+              <em>Dynamic Thresholds</em>
             </MenuItem>
-            <MenuItem value="option1">Option 1</MenuItem>
-            <MenuItem value="option2">Option 2</MenuItem>
-            <MenuItem value="option3">Option 3</MenuItem>
+            <MenuItem value="option1">Preset 1</MenuItem>
+            <MenuItem value="option2">Preset 2</MenuItem>
+            <MenuItem value="option3">Preset 3</MenuItem>
           </Select>
       {parameters.map((param, index) => (
         <Box key={index} sx={{ marginBottom: 2 }}>
