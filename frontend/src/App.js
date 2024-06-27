@@ -12,7 +12,7 @@ import './App.css';
 import Header from './components/header/Header';
 import SideBar from './components/sidebar/SideBar';
 import SignInPage from "./components/signin/signin";
-import ParameterSelection from "./components/parameterSelection/parameterSelection";
+import MainDashboard from "./components/mainDashboard/mainDashboard";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -38,11 +38,13 @@ function App() {
   return (
       <>
         {isLoggedIn ? (
-            <>
+            <div className="app">
                 <Header onLogout={handleLogout} />
-              <ParameterSelection/>
-              <SideBar />
-            </>
+                <div className="main-content">
+                    <SideBar />
+                    <MainDashboard/>
+              </div>
+            </div>
         ) : (
             <SignInPage onLogin={handleLogin} />
         )}
