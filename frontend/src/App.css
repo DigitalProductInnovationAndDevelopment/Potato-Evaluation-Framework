@@ -36,3 +36,20 @@ h5,
 h6 {
   font-family: 'Nunito', sans-serif;
 }
+
+/* App.css */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-content {
+  display: flex;
+  flex: 6;
+}
+
+.parameter-selection {
+  flex: 1;
+  padding: 20px; /* Adjust padding as needed */
+}

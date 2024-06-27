@@ -5,7 +5,7 @@ function SideBar() {
   return (<aside id="sidebar" className="sidebar">
     <ul className="sidebar-nav" id="sidebar-nav">
         <li className="nav-item">
-            <a href="/frontend/public" className="nav-link">
+            <a href="/mainDashboard" className="nav-link">
                 <i className="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>

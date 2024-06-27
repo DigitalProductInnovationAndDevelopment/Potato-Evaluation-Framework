@@ -1,15 +1,6 @@
-.dashboard-container {
-    width: 300px;
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    bottom: 200px;
-    left: 200px; 
-  }
-  
   .dashboard-header {
     font-size: 1.25rem;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
   }
   
   .parameter-box {
@@ -26,14 +17,20 @@
   
   .apply-button {
     margin-top: 16px;
-    background-color: #1976d2;
+    background-color: #268ef6;
     color: white;
   }
   
   .apply-button:hover {
-    background-color: #1565c0;
+    background-color: #c01515;
   }
   .custom-textfield {
     width: 50px; /* Adjust the width as needed */
+  }
+
+  .parameter-selection {
+    flex: 0; /* Adjust padding as needed */
+    margin-top: -80px;
+    margin-left: -20px;
   }
   
