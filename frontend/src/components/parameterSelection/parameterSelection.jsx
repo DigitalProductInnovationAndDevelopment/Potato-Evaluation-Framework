@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Slider, TextField, Button, Typography, Box } from '@mui/material';
+import { Slider, TextField, Button, Typography, Box, Select, MenuItem } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import './parameterSelection.css';
+
 
 const ParameterSelection = () => {
   const [parameters, setParameters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+
 
 
   useEffect(() => {
@@ -47,6 +50,10 @@ const ParameterSelection = () => {
     setParameters(newParameters);
   };
 
+  const handleDropdownChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+  
   const handleSubmit = async () => {
     setLoading(true);
     setResponseMessage('');
@@ -96,14 +103,34 @@ const ParameterSelection = () => {
   return (
     <div className="parameter-selection">
     <Box sx={{ width: 400, marginTop: 10, marginLeft: 40, padding: 2, border: '1px solid #ccc', borderRadius: 2, backgroundColor: '#ffffff' }}>
-      <Typography variant="h6" gutterBottom fontWeight="bold">
-        Parameter Selection
-      </Typography>
+      <Typography
+  variant="h6"
+  gutterBottom
+  fontWeight="bold"
+  style={{ color: '#114511' }} // Added style for text color
+>
+  Parameter Selection
+</Typography>
+<Select
+            value={selectedOption}
+            onChange={handleDropdownChange}
+            displayEmpty
+            inputProps={{ 'aria-label': 'Without label' }}
+            style={{ marginLeft: 'auto' }}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="option1">Option 1</MenuItem>
+            <MenuItem value="option2">Option 2</MenuItem>
+            <MenuItem value="option3">Option 3</MenuItem>
+          </Select>
       {parameters.map((param, index) => (
         <Box key={index} sx={{ marginBottom: 2 }}>
           <Typography gutterBottom>{param.name}</Typography>
           <Slider
             value={typeof param.value === 'number' ? param.value : 0}
+            style={{ color: '#114511' }}
             onChange={(event, newValue) => handleSliderChange(index, newValue)}
             aria-labelledby="input-slider"
             step={0.1}
@@ -128,9 +155,11 @@ const ParameterSelection = () => {
               fontSize: '16px',
             }}
           />
+          
         </Box>
       ))}
-      <Button variant="contained" color="primary" onClick={handleSubmit} disabled={loading}>
+      <Button variant="contained"   style={{ backgroundColor: '#114511', color: '#ffffff' }}
+ onClick={handleSubmit} disabled={loading}>
         {loading && <FontAwesomeIcon icon={faSpinner} spin style={{ marginRight: '8px' }} />}
         {loading ? 'Loading...' : 'Apply'}
       </Button>

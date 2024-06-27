@@ -75,7 +75,7 @@
     align-items: center;
     font-size: 15px;
     font-weight: 600;
-    color: #4154f1;
+    color: #11422E;
     transition: 0.3;
     background: #f6f9ff;
     padding: 10px 15px;
@@ -85,7 +85,7 @@
 .sidebar-nav .nav-link i{
     font-size: 16px;
     margin-right: 10px;
-    color: #4154f1;
+    color: #11422E;
 }
 
 .sidebar-nav .nav-link.collapsed {
