@@ -15,9 +15,6 @@ const updateParameters = async (req, res) => {
     const data = await fs.readFile(filePath, "utf8");
     const parameters = JSON.parse(data);
 
-    console.log(preset_name);
-    console.log(defekt_proportion_thresholds);
-
     // Validate new parameters against schema
     if (!validateParameters(defekt_proportion_thresholds, ParametersSchema.thresholds)) {
       return res.status(400).json({ message: "Invalid parameters format or values out of range" });
@@ -28,12 +25,8 @@ const updateParameters = async (req, res) => {
       return res.status(400).json({ message: "Preset is not found" });
     }
 
-    // Update parameters
-    for (let key in defekt_proportion_thresholds) {
-      if (parameters.parameters.preset_name.hasOwnProperty(key)) {
-        parameters.parameters.preset_name[key] = defekt_proportion_thresholds[key];
-      }
-    }
+    // Update parameters for the given preset
+    parameters.parameters[preset_name] = defekt_proportion_thresholds;
 
     // Write the updated parameters back to the file
     await fs.writeFile(filePath, JSON.stringify(parameters, null, 4), "utf8");
