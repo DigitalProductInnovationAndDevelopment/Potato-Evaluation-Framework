@@ -1,5 +1,5 @@
 const ParametersSchema = {
-    "dynamic_defekt_proportion_thresholds": {
+    "thresholds": {
         "greening": { type: "number", min: 0, max: 1 },
         "dry_rot": { type: "number", min: 0, max: 1 },
         "wet_rot": { type: "number", min: 0, max: 1 },
