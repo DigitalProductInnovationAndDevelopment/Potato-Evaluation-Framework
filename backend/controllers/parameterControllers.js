@@ -8,7 +8,7 @@ const ParametersSchema = require("../models/parameters");
 const filePath = path.join(__dirname, "../models/parameters.json");
 
 const updateParameters = async (req, res) => {
-  const { dynamic_defekt_proportion_thresholds } = req.body;
+  const { preset_name, defekt_proportion_thresholds } = req.body;
 
   try {
     // Read the existing parameters from the file
@@ -16,16 +16,17 @@ const updateParameters = async (req, res) => {
     const parameters = JSON.parse(data);
 
     // Validate new parameters against schema
-    if (!validateParameters(dynamic_defekt_proportion_thresholds, ParametersSchema.dynamic_defekt_proportion_thresholds)) {
+    if (!validateParameters(defekt_proportion_thresholds, ParametersSchema.thresholds)) {
       return res.status(400).json({ message: "Invalid parameters format or values out of range" });
     }
 
-    // Update parameters
-    for (let key in dynamic_defekt_proportion_thresholds) {
-      if (parameters.parameters.dynamic_defekt_proportion_thresholds.hasOwnProperty(key)) {
-        parameters.parameters.dynamic_defekt_proportion_thresholds[key] = dynamic_defekt_proportion_thresholds[key];
-      }
+    // Check if preset is existing
+    if (!parameters.parameters.hasOwnProperty(preset_name)) {
+      return res.status(400).json({ message: "Preset is not found" });
     }
+
+    // Update parameters for the given preset
+    parameters.parameters[preset_name] = defekt_proportion_thresholds;
 
     // Write the updated parameters back to the file
     await fs.writeFile(filePath, JSON.stringify(parameters, null, 4), "utf8");
@@ -41,7 +42,7 @@ const getParameters = async (req, res) => {
     // Read the existing parameters from the file
     const data = await fs.readFile(filePath, "utf8");
     const parameters = JSON.parse(data);
-    res.status(200).json(parameters.parameters.dynamic_defekt_proportion_thresholds);
+    res.status(200).json(parameters.parameters);
   } catch (err) {
     res.status(500).json({ message: "Error reading parameters file", error: err });
   }

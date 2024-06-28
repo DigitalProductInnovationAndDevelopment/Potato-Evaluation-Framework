@@ -12,7 +12,7 @@
             "stone": 0.5
         },
         "preset_0": {
-            "greening": 0.2,
+            "greening": 0.0,
             "dry_rot": 0.1,
             "wet_rot": 0,
             "wire_worm": 0,
@@ -23,7 +23,95 @@
             "stone": 0
         },
         "preset_1": {
+            "greening": 0.1,
+            "dry_rot": 0.1,
+            "wet_rot": 0,
+            "wire_worm": 0,
+            "malformed": 0.7,
+            "growth_crack": 0.1,
+            "mechanical_damage": 0,
+            "dirt_clod": 0,
+            "stone": 0
+        },
+        "preset_2": {
             "greening": 0.2,
+            "dry_rot": 0.1,
+            "wet_rot": 0,
+            "wire_worm": 0,
+            "malformed": 0.7,
+            "growth_crack": 0.1,
+            "mechanical_damage": 0,
+            "dirt_clod": 0,
+            "stone": 0
+        },
+        "preset_3": {
+            "greening": 0.3,
+            "dry_rot": 0.1,
+            "wet_rot": 0,
+            "wire_worm": 0,
+            "malformed": 0.7,
+            "growth_crack": 0.1,
+            "mechanical_damage": 0,
+            "dirt_clod": 0,
+            "stone": 0
+        },
+        "preset_4": {
+            "greening": 0.4,
+            "dry_rot": 0.1,
+            "wet_rot": 0,
+            "wire_worm": 0,
+            "malformed": 0.7,
+            "growth_crack": 0.1,
+            "mechanical_damage": 0,
+            "dirt_clod": 0,
+            "stone": 0
+        },
+        "preset_5": {
+            "greening": 0.5,
+            "dry_rot": 0.1,
+            "wet_rot": 0,
+            "wire_worm": 0,
+            "malformed": 0.7,
+            "growth_crack": 0.1,
+            "mechanical_damage": 0,
+            "dirt_clod": 0,
+            "stone": 0
+        },
+        "preset_6": {
+            "greening": 0.6,
+            "dry_rot": 0.1,
+            "wet_rot": 0,
+            "wire_worm": 0,
+            "malformed": 0.7,
+            "growth_crack": 0.1,
+            "mechanical_damage": 0,
+            "dirt_clod": 0,
+            "stone": 0
+        },
+        "preset_7": {
+            "greening": 0.7,
+            "dry_rot": 0.1,
+            "wet_rot": 0,
+            "wire_worm": 0,
+            "malformed": 0.7,
+            "growth_crack": 0.1,
+            "mechanical_damage": 0,
+            "dirt_clod": 0,
+            "stone": 0
+        },
+        "preset_8": {
+            "greening": 0.8,
+            "dry_rot": 0.1,
+            "wet_rot": 0,
+            "wire_worm": 0,
+            "malformed": 0.7,
+            "growth_crack": 0.1,
+            "mechanical_damage": 0,
+            "dirt_clod": 0,
+            "stone": 0
+        },
+        "preset_9": {
+            "greening": 0.9,
             "dry_rot": 0.1,
             "wet_rot": 0,
             "wire_worm": 0,
