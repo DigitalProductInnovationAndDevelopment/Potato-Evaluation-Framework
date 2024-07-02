@@ -10,31 +10,33 @@ const ParameterSelection = () => {
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
-  const [selectedPreset, setSelectedPreset] = useState('dynamic_defekt_proportion_thresholds');
+  const [selectedPreset, setSelectedPreset] = useState('');
   const [presets, setPresets] = useState([]);
   const [currentParameters, setCurrentParameters] = useState({});
 
   useEffect(() => {
-    const fetchParameters = async () => {
-      const token = localStorage.getItem('token');
-      try {
-        const response = await axios.get('http://localhost:8080/parameters', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        const fetchedParameters = response.data;
-        setParameters(fetchedParameters);
-        const presetKeys = Object.keys(fetchedParameters).filter(key => key.startsWith('preset_'));
-        setPresets(presetKeys);
-        setCurrentParameters(fetchedParameters['dynamic_defekt_proportion_thresholds']);
-      } catch (error) {
-        console.error('Error fetching parameters:', error);
-      }
-    };
-
     fetchParameters();
   }, []);
+
+  const fetchParameters = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axios.get('http://localhost:8080/parameters', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const fetchedParameters = response.data;
+      setParameters(fetchedParameters);
+      const presetKeys = Object.keys(fetchedParameters).filter(key => key.startsWith('preset_'));
+      setPresets(presetKeys);
+      const initialPreset = presetKeys[0] || 'dynamic_defekt_proportion_thresholds';
+      setSelectedPreset(initialPreset);
+      setCurrentParameters(fetchedParameters[initialPreset]);
+    } catch (error) {
+      console.error('Error fetching parameters:', error);
+    }
+  };
 
   const handleSliderChange = (key, newValue) => {
     setCurrentParameters(prevParams => ({
@@ -76,6 +78,8 @@ const ParameterSelection = () => {
       if (response.status === 200) {
         setIsSuccess(true);
         setResponseMessage('Success! Your request was processed.');
+        // Refetch parameters after a successful update
+        await fetchParameters();
       } else {
         setIsSuccess(false);
         setResponseMessage('Error! Something went wrong.');
