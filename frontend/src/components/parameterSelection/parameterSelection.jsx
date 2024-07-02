@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Slider, TextField, Button, Typography, Box, Select, MenuItem } from '@mui/material';
+import { Slider, TextField, Button, Typography, Box, Select, MenuItem, IconButton, Tooltip, Collapse } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import './parameterSelection.css';
+
+const descriptions = [
+  'Proportion of greening accepted on tuber.',
+  'Proportion of dry rot accepted on tuber.',
+  'Wet rot is just yes/no value',
+  'Proportion of wire worm accepted on tuber.',
+  'Proportion of growth accepted on tuber.',
+  'Proportion of mechanical accepted on tuber',
+  'Proportion of mechanical accepted on tuber',
+  'Dirt Clod is just yes/no value',
+  'Stone is just yes/no value'
+];
 
 const ParameterSelection = () => {
   const [parameters, setParameters] = useState({});
@@ -13,6 +25,7 @@ const ParameterSelection = () => {
   const [selectedPreset, setSelectedPreset] = useState('dynamic_defekt_proportion_thresholds');
   const [presets, setPresets] = useState([]);
   const [currentParameters, setCurrentParameters] = useState({});
+  const [infoVisible, setInfoVisible] = useState({});
 
   useEffect(() => {
     const fetchParameters = async () => {
@@ -57,6 +70,13 @@ const ParameterSelection = () => {
     setCurrentParameters(parameters[selectedKey]);
   };
 
+  const handleInfoToggle = (key) => {
+    setInfoVisible(prevState => ({
+      ...prevState,
+      [key]: !prevState[key]
+    }));
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
     setResponseMessage('');
@@ -99,6 +119,7 @@ const ParameterSelection = () => {
           <Typography variant="h6" gutterBottom fontWeight="bold" style={{ color: '#114511' }}>
             Parameter Selection
           </Typography>
+          <Box display="flex" alignItems="center">
           <Select
               value={selectedPreset}
               onChange={handleDropdownChange}
@@ -109,42 +130,69 @@ const ParameterSelection = () => {
             <MenuItem value="dynamic_defekt_proportion_thresholds">
               <em>Dynamic Thresholds</em>
             </MenuItem>
+            
             {presets.map(preset => (
                 <MenuItem key={preset} value={preset}>
                   {preset.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                 </MenuItem>
             ))}
           </Select>
+          <Button sx={{ marginLeft: 10 }}
+              variant="contained"
+              style={{ backgroundColor: '#114511', color: '#ffffff' }}
+              onClick={handleSubmit}
+              disabled={loading}
+          >
+            {loading && <FontAwesomeIcon icon={faSpinner} spin style={{ marginRight: '8px' }} />}
+            {loading ? 'Loading...' : 'Apply'}
+          </Button>
+          </Box>
           {Object.keys(currentParameters).map((key, index) => (
               <Box key={index} sx={{ marginBottom: 2 }}>
-                <Typography gutterBottom>{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</Typography>
-                <Slider
-                    value={typeof currentParameters[key] === 'number' ? currentParameters[key] : 0}
-                    style={{ color: '#114511' }}
-                    onChange={(event, newValue) => handleSliderChange(key, newValue)}
-                    aria-labelledby="input-slider"
-                    step={0.1}
-                    min={0.0}
-                    max={1.0}
-                />
-                <TextField
-                    value={currentParameters[key]}
-                    onChange={(event) => handleInputChange(key, event)}
-                    inputProps={{
-                      step: 0.1,
-                      min: 0.0,
-                      max: 1.0,
-                      type: 'number',
-                      'aria-labelledby': 'input-slider'
-                    }}
-                    style={{
-                      width: '80px',
-                      height: '50px',
-                      margin: '5px',
-                      color: '#333',
-                      fontSize: '16px',
-                    }}
-                />
+                <Box display="flex" alignItems="center">
+                  <Typography gutterBottom>
+                    {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  </Typography>
+                  <Tooltip title="More info">
+                    <IconButton onClick={() => handleInfoToggle(key)}>
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+                <Box display="flex" alignItems="center">
+                  <Slider
+                      value={typeof currentParameters[key] === 'number' ? currentParameters[key] : 0}
+                      style={{ color: '#114511', flex: 1,  marginRight: 20 }}
+                      onChange={(event, newValue) => handleSliderChange(key, newValue)}
+                      aria-labelledby="input-slider"
+                      step={0.1}
+                      min={0.0}
+                      max={1.0}
+                  />
+                  <TextField
+                      value={currentParameters[key]}
+                      onChange={(event) => handleInputChange(key, event)}
+                      inputProps={{
+                        step: 0.5,
+                        min: 0.0,
+                        max: 1.0,
+                        type: 'number',
+                        'aria-labelledby': 'input-slider'
+                      }}
+                      style={{
+                        width: '80px',
+                        height: '50px',
+                        margin: '5px',
+                        color: '#333',
+                        fontSize: '16px',
+                      }}
+                  />
+                </Box>
+                <Collapse in={infoVisible[key]}>
+                  <Typography variant="body2" style={{ marginTop: '10px' }}>
+                    {descriptions[index]}
+                  </Typography>
+                </Collapse>
               </Box>
           ))}
           <Button
