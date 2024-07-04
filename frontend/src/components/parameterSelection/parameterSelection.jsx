@@ -155,7 +155,7 @@ const ParameterSelection = () => {
                   </Typography>
                   <Tooltip title="More info">
                     <IconButton onClick={() => handleInfoToggle(key)}>
-                      <FontAwesomeIcon icon={faInfoCircle} />
+                      <FontAwesomeIcon icon={faInfoCircle} style={{ color: '#114511'}} />
                     </IconButton>
                   </Tooltip>
                 </Box>
