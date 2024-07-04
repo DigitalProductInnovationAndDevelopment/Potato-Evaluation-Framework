@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Select, MenuItem, Typography, Box } from '@mui/material';
+import { Select, MenuItem, Typography, Box, Button } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 const ModelSelection = () => {
   const [selectedModel, setSelectedModel] = useState('');
   const [models, setModels] = useState([]);
   const [currentModelName, setCurrentModelName] = useState('');
   const [currentModelDescription, setCurrentModelDescription] = useState('');
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     const fetchModels = async () => {
@@ -51,6 +55,11 @@ const ModelSelection = () => {
     }
   };
 
+  const handleClick = () => {
+    console.log("Model changed");
+    // handleSubmit logic here after meeting with karevo
+  };
+
   return (
     <div className="model-selection">
       <Box sx={{ width: 400, marginTop: 10, marginLeft: 40, padding: 2, border: '1px solid #ccc', borderRadius: 2, backgroundColor: '#ffffff' }}>
@@ -66,6 +75,7 @@ const ModelSelection = () => {
         >
           Model Selection
         </Typography>
+        <Box display="flex" alignItems="center">
         <Select
           value={selectedModel}
           onChange={handleModelChange}
@@ -79,6 +89,16 @@ const ModelSelection = () => {
             </MenuItem>
           ))}
         </Select>
+        <Button sx={{ marginLeft: 10 }}
+              variant="contained"
+              style={{ backgroundColor: '#114511', color: '#ffffff' }}
+              onClick={handleClick}
+              disabled={loading}
+          >
+            {loading && <FontAwesomeIcon icon={faSpinner} spin style={{ marginRight: '8px' }} />}
+            Apply
+          </Button>
+        </Box>
         <Typography variant="body1" gutterBottom>
         Description: {currentModelDescription}
         </Typography>
