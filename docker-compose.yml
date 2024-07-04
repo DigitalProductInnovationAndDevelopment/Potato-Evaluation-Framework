@@ -6,6 +6,8 @@ services:
     container_name: karevo-dashboard-api
     ports:
       - '8080:8080'
+    volumes:
+      - ./backend:/app        # Mounts the backend directory to /app inside the container
     environment:
       MONGO_URI: mongodb://karevo:raFWD4Jr4ysCMn4oo138@database:27017/karevo-dashboard?authSource=admin
     depends_on:
@@ -18,6 +20,9 @@ services:
     container_name: karevo-dashboard-web
     ports:
       - '3000:3000'
+    volumes:
+      - ./frontend/src:/app/src          # Mount only the source files for hot-reloading
+      - ./frontend/public:/app/public
     networks:
       - karevo-network
 

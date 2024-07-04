@@ -1,28 +1,21 @@
-import {useEffect, useState} from "react";
-
-//import Icons
+import { useEffect, useState } from "react";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import 'remixicon/fonts/remixicon.css'
-
-//Import Bootstrap
+import 'remixicon/fonts/remixicon.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js'
-
+import 'bootstrap/dist/js/bootstrap.min.js';
 import './App.css';
 import Header from './components/header/Header';
-import SideBar from './components/sidebar/SideBar';
-import SignInPage from "./components/signin/signin";
-import MainDashboard from "./components/mainDashboard/mainDashboard";
+import SignInPage from "./components/signin/Signin";
+import MainDashboard from "./components/mainDashboard/MainDashboard";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
-        // Check if the user is already logged in by reading from local storage
         const storedLoginStatus = localStorage.getItem('isLoggedIn');
         return storedLoginStatus === 'true';
     });
 
     useEffect(() => {
-        // Save login status to local storage whenever it changes
         localStorage.setItem('isLoggedIn', isLoggedIn);
     }, [isLoggedIn]);
 
@@ -35,21 +28,25 @@ function App() {
         localStorage.removeItem('isLoggedIn');
     };
 
-  return (
-      <>
-        {isLoggedIn ? (
+    return (
+        <Router>
             <div className="app">
-                <Header onLogout={handleLogout} />
-                <div className="main-content">
-                    <SideBar />
-                    <MainDashboard/>
-              </div>
+                {true ? (
+                    <>
+                        <Header onLogout={handleLogout} />
+                        <div className="main-content">
+                            <Routes>
+                                <Route path="/" element={<MainDashboard />} />
+                                {/* Add more routes as needed */}
+                            </Routes>
+                        </div>
+                    </>
+                ) : (
+                    <SignInPage onLogin={handleLogin} />
+                )}
             </div>
-        ) : (
-            <SignInPage onLogin={handleLogin} />
-        )}
-      </>
-  );
+        </Router>
+    );
 }
 
 export default App;
