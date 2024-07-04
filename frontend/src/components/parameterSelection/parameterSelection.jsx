@@ -8,13 +8,13 @@ import './parameterSelection.css';
 const descriptions = [
   'Proportion of greening accepted on tuber.',
   'Proportion of dry rot accepted on tuber.',
-  'Wet rot is just yes/no value',
+  'Wet rot is just yes/no value.',
   'Proportion of wire worm accepted on tuber.',
   'Proportion of growth accepted on tuber.',
-  'Proportion of mechanical accepted on tuber',
-  'Proportion of mechanical accepted on tuber',
-  'Dirt Clod is just yes/no value',
-  'Stone is just yes/no value'
+  'Proportion of mechanical accepted on tuber.',
+  'Proportion of mechanical accepted on tuber.',
+  'Dirt Clod is just yes/no value.',
+  'Stone is just yes/no value.'
 ];
 
 const ParameterSelection = () => {
