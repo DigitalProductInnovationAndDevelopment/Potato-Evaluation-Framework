@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios";
 
 import './signin.css';
+import icon from '../../logo.svg';
 
 const SignInPage = ({ onLogin }) => {
     const [email, setEmail] = useState('');
@@ -44,7 +45,10 @@ const SignInPage = ({ onLogin }) => {
 
     return (
         <div className="signin-container">
-            <div className="dashboard-title">Karevo Dashboard</div>
+            <div className="dashboard-title">
+                <img src={icon} alt="Logo" style={{ width: '150px', height: '150px' }} />
+                <div>Karevo Dashboard</div>
+                </div>
             <form className="signin-form" onSubmit={(e) => e.preventDefault()}>
                 <h2 className="signin-title">Sign In</h2>
                 {error && <div className="error-message">{error}</div>}
