@@ -5,7 +5,7 @@
   --bgColor: #f6f9ff;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -17,7 +17,7 @@ body {
   background: var(--bgColor);
 }
 
-a{
+a {
   color: #4154f1;
   text-decoration: none;
   cursor: pointer;
@@ -37,7 +37,6 @@ h6 {
   font-family: 'Nunito', sans-serif;
 }
 
-/* App.css */
 .app {
   display: flex;
   flex-direction: column;
@@ -47,9 +46,4 @@ h6 {
 .main-content {
   display: flex;
   flex: 6;
-}
-
-.parameter-selection {
-  flex: 1;
-  padding: 20px; /* Adjust padding as needed */
 }

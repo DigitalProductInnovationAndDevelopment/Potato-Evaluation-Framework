@@ -37,7 +37,6 @@ function App() {
                         <div className="main-content">
                             <Routes>
                                 <Route path="/" element={<MainDashboard />} />
-                                {/* Add more routes as needed */}
                             </Routes>
                         </div>
                     </>

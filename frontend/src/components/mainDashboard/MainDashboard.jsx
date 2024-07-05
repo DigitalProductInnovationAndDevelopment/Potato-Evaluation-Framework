@@ -3,7 +3,7 @@ import './mainDashboard.css';
 import ParameterSelection from '../parameterSelection/ParameterSelection';
 import ModelSelection from '../modelSelection/ModelSelection';
 import Statistics from "../statistics/Statistics";
-import {mockData} from "../statistics/mockData";
+import { mockData } from "../statistics/mockData";
 
 function mainDashboard() {
   return (
@@ -18,7 +18,7 @@ function mainDashboard() {
           <div class="col-auto">
               <Statistics data={mockData} />
           </div>
-       
+
       </div>
 
     </div>
