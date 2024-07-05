@@ -1,17 +1,9 @@
-#dashboard {
-    transition: all 0.3s;
-    flex: 1; /* Adjust padding as needed */
+.dashboard {
+    padding: 20px;
 }
 
-@media (max-width: 1199px) {
-    #dashboard {
-        padding: 20px;
-    }
-
+.dashboard .row > div {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
 }
-
-.toggle-dashboard .dashboard{
-    flex: 0; /* Adjust padding as needed */
-    margin-left: -300px;
-  }
-  
