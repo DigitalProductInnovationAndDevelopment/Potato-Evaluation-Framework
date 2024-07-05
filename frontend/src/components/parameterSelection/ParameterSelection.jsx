@@ -119,7 +119,7 @@ const ParameterSelection = () => {
 
   return (
       <div className="parameter-selection">
-        <Box sx={{ width: 400, marginTop: 10, marginLeft: 40, padding: 2, border: '1px solid #ccc', borderRadius: 2, backgroundColor: '#ffffff' }}>
+        <Box sx={{ width: 400, marginTop: 8, marginLeft: 0.5, padding: 1, border: '1px solid #ccc', borderRadius: 2, backgroundColor: '#ffffff' }}>
           <Typography variant="h6" gutterBottom fontWeight="bold" style={{ color: '#114511' }}>
             Parameter Selection
           </Typography>

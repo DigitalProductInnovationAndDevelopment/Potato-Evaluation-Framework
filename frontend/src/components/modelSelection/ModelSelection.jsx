@@ -4,6 +4,12 @@ import { Select, MenuItem, Typography, Box, Button } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
+const mockModels = [
+  { _id: '1', name: 'Model 1', description: 'Description for Model 1', isCurrent: false },
+  { _id: '2', name: 'Model 2', description: 'Description for Model 2', isCurrent: true },
+  { _id: '3', name: 'Model 3', description: 'Description for Model 3', isCurrent: false }
+];
+
 const ModelSelection = () => {
   const [selectedModel, setSelectedModel] = useState('');
   const [models, setModels] = useState([]);
@@ -37,6 +43,14 @@ const ModelSelection = () => {
           setCurrentModelDescription(currentModel.description);
         }
       } catch (error) {
+        setModels(mockModels);
+        setSelectedModel(mockModels[0]._id);
+        setCurrentModelDescription(mockModels[0].description);
+        const currentModel = mockModels.find(model => model.isCurrent === true);
+        if (currentModel) {
+          setCurrentModelName(currentModel.name);
+          setCurrentModelDescription(currentModel.description);
+        }
         console.error('Error fetching models:', error);
       }
     };
@@ -62,7 +76,7 @@ const ModelSelection = () => {
 
   return (
     <div className="model-selection">
-      <Box sx={{ width: 400, marginTop: 10, marginLeft: 40, padding: 2, border: '1px solid #ccc', borderRadius: 2, backgroundColor: '#ffffff' }}>
+      <Box sx={{ width: 400, marginTop: -2, marginLeft: 0, padding: 2, border: '1px solid #ccc', borderRadius: 2, backgroundColor: '#ffffff' }}>
         <Typography variant="h8" gutterBottom>
           Currently using model: {currentModelName}
         </Typography>
@@ -81,7 +95,6 @@ const ModelSelection = () => {
           onChange={handleModelChange}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
-          style={{ marginLeft: 'auto' }}
         >
           {models.map((model) => (
             <MenuItem key={model._id} value={model._id}>

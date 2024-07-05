@@ -8,22 +8,20 @@ import { mockData } from "../statistics/mockData";
 function mainDashboard() {
   return (
     <div id="dashboard" className="dashboard">
-      <div class="row">
-        <div class="col-sm">
-        <ParameterSelection />
+        <div className="row">
+            <div className="col-sm-4">
+                <ParameterSelection/>
+            </div>
+            <div className="col-sm-4">
+                <Statistics data={mockData}/>
+            </div>
+            <div className="col-sm-4">
+                <ModelSelection/>
+            </div>
         </div>
-        <div class="col-sm">
-        <ModelSelection />
-      </div>
-          <div class="col-auto">
-              <Statistics data={mockData} />
-          </div>
-
-      </div>
-
     </div>
   )
-};
+}
 
 export default mainDashboard;
 
