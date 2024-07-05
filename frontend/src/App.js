@@ -31,7 +31,7 @@ function App() {
     return (
         <Router>
             <div className="app">
-                {true ? (
+                {isLoggedIn ? (
                     <>
                         <Header onLogout={handleLogout} />
                         <div className="main-content">
