@@ -15,47 +15,47 @@ const Statistics = ({ data }) => {
     }));
 
     return (
-        <div className="statistics">
-            <h2>Potato Quality Statistics</h2>
-            <div className="charts">
-                <div className="chart">
-                    <h3>Good vs Defected Potatoes</h3>
+        <div className="box">
+            <div className="h2" style={{textAlign: "center"}}>Potato Quality Statistics </div>
+            <div className="charts mx">
+                <div className="chart" style={{marginLeft: "50px"}}>
+                    <div className="h3" style={{textAlign: "center"}}>Good/Bad Potatoes</div>
                     <PieChart width={400} height={400}>
                         <Pie
                             data={goodVsDefectedData}
-                            cx={200}
-                            cy={200}
-                            outerRadius={150}
+                            cx={150}
+                            cy={150}
+                            outerRadius={120}
                             fill="#8884d8"
                             dataKey="value"
                             label
                         >
                             {goodVsDefectedData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
                             ))}
                         </Pie>
-                        <Tooltip />
-                        <Legend />
+                        <Tooltip/>
+                        <Legend/>
                     </PieChart>
                 </div>
-                <div className="chart">
-                    <h3>Defected Potatoes Breakdown</h3>
+                <div className="chart" style={{marginLeft: "50px"}}>
+                    <div className="h3" style={{textAlign: "center"}}>Defected Potatoes</div>
                     <PieChart width={400} height={400}>
                         <Pie
                             data={defectedDetailsData}
-                            cx={200}
-                            cy={200}
-                            outerRadius={150}
+                            cx={150}
+                            cy={150}
+                            outerRadius={120}
                             fill="#82ca9d"
                             dataKey="value"
                             label
                         >
                             {defectedDetailsData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
                             ))}
                         </Pie>
-                        <Tooltip />
-                        <Legend />
+                        <Tooltip/>
+                        <Legend/>
                     </PieChart>
                 </div>
             </div>
