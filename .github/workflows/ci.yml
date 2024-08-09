@@ -1,10 +1,9 @@
-name: CI Workflow
+name: Karevo Dashboard CI
 
 on:
   push:
     branches:
       - main
-      - 'feature/**'
   pull_request:
     branches:
       - main
@@ -25,11 +24,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: backend # Ensure this points to your backend directory
+        working-directory: backend
 
       - name: Run backend tests
         run: npm test
-        working-directory: backend # Ensure this points to your backend directory
+        working-directory: backend
 
       - name: Upload Backend Test Results
         if: always()
@@ -60,11 +59,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: frontend # Ensure this points to your frontend directory
+        working-directory: frontend
 
       - name: Run frontend tests
         run: npm test
-        working-directory: frontend # Ensure this points to your frontend directory
+        working-directory: frontend
 
       - name: Upload Frontend Test Results
         if: always()
