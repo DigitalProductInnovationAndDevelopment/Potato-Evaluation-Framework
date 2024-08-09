@@ -10,7 +10,7 @@ on:
 
 jobs:
   backend:
-    name: Test Backend
+    name: Backend
     runs-on: ubuntu-latest
 
     steps:
@@ -49,7 +49,7 @@ jobs:
           path: backend/coverage
 
   frontend:
-    name: Test Frontend
+    name: Frontend
     runs-on: ubuntu-latest
 
     steps:
