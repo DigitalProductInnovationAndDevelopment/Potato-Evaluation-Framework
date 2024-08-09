@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const jwt = require('jsonwebtoken');
+const process = require('process')
 
 const getAllUsers = async (req, res) => {
   try {
@@ -12,7 +13,6 @@ const getAllUsers = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body)
 
   try {
     const user = await User.findOne({ email });

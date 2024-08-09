@@ -1,5 +1,4 @@
 const DetectionModel = require("../models/DetectionModel");
-const jwt = require("jsonwebtoken");
 
 const getAllModels = async (req, res) => {
   try {
