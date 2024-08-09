@@ -1,0 +1,81 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: backend # Ensure this points to your backend directory
+
+      - name: Run backend tests
+        run: npm test
+        working-directory: backend # Ensure this points to your backend directory
+
+      - name: Upload Backend Test Results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-jest-results
+          path: backend/jest-results.xml
+
+      - name: Upload Backend Coverage Report
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-coverage-report
+          path: backend/coverage
+
+  frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: frontend # Ensure this points to your frontend directory
+
+      - name: Run frontend tests
+        run: npm test
+        working-directory: frontend # Ensure this points to your frontend directory
+
+      - name: Upload Frontend Test Results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-jest-results
+          path: frontend/jest-results.xml
+
+      - name: Upload Frontend Coverage Report
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-coverage-report
+          path: frontend/coverage
