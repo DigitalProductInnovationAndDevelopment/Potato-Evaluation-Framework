@@ -1,4 +1,4 @@
-name: Karevo Dashboard CI
+name: CI
 
 on:
   push:
