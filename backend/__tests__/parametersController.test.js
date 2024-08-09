@@ -5,7 +5,7 @@ const fs = require('fs').promises;
 const jest = require('jest');
 
 const { updateParameters, getParameters } = require('../controllers/parametersController');
-const {describe, it, expect} = jest;
+const {describe, it, expect, beforeEach} = jest;
 
 // Mock the fs and path modules
 jest.mock('fs').promises;
@@ -22,14 +22,6 @@ app.get('/api/parameters', getParameters);
 const mockParameters = {
     parameters: {
         "preset1": { threshold1: 0.5, threshold2: 0.8 },
-    },
-};
-
-// Mock schema
-const mockSchema = {
-    thresholds: {
-        threshold1: { type: "number", min: 0, max: 1 },
-        threshold2: { type: "number", min: 0, max: 1 },
     },
 };
 

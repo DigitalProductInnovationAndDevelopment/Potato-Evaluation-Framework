@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const process = require("process");
 
 const auth = async (req, res, next) => {
   const authHeader = req.header("Authorization");
@@ -16,11 +17,10 @@ const auth = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    req.user = jwt.verify(token, process.env.JWT_SECRET);
     next();
   } catch (error) {
-    res.status(400).json({ message: "Invalid token" });
+    res.status(400).json({ message: `${error.message}` });
   }
 };
 

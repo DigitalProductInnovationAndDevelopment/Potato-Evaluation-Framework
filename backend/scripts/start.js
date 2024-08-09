@@ -1,4 +1,5 @@
 const { exec } = require('child_process');
+const process = require("process");
 
 exec('node scripts/seed.js', (err, stdout, stderr) => {
   if (err) {
