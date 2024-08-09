@@ -1,6 +1,5 @@
 const fs = require("fs").promises;
 const path = require("path");
-const _ = require("lodash");
 
 const ParametersSchema = require("../models/parameters");
 
