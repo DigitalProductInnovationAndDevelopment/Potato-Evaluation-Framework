@@ -28,6 +28,7 @@ jobs:
 
       - name: Lint code
         run: yarn lint
+        working-directory: backend
 
       - name: Run backend tests
         run: yarn test
@@ -66,6 +67,7 @@ jobs:
 
       - name: Lint code
         run: yarn lint
+        working-directory: frontend
 
       - name: Run frontend tests
         run: yarn test
