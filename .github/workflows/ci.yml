@@ -26,8 +26,11 @@ jobs:
         run: npm install
         working-directory: backend
 
+      - name: Lint code
+        run: yarn lint
+
       - name: Run backend tests
-        run: npm test
+        run: yarn test
         working-directory: backend
 
       - name: Upload Backend Test Results
@@ -61,8 +64,11 @@ jobs:
         run: npm install
         working-directory: frontend
 
+      - name: Lint code
+        run: yarn lint
+
       - name: Run frontend tests
-        run: npm test
+        run: yarn test
         working-directory: frontend
 
       - name: Upload Frontend Test Results

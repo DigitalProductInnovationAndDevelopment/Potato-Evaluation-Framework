@@ -2,8 +2,10 @@ const request = require('supertest');
 const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
+const jest = require('jest');
 
 const { updateParameters, getParameters } = require('../controllers/parametersController');
+const {describe, it, expect} = jest;
 
 // Mock the fs and path modules
 jest.mock('fs').promises;
