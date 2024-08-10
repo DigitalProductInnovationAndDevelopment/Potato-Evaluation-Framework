@@ -2,18 +2,17 @@ const request = require('supertest');
 const express = require('express');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const { getAllUsers, loginUser } = require('../controllers/userController');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const User = require('../models/User');
+const { getAllUsers, loginUser } = require('../controllers/userController');
+
 
 // Set up an Express app for testing
 const app = express();
 app.use(express.json());
-
 app.get('/users', getAllUsers);
 app.post('/login', loginUser);
 
-// Optional: Set up an in-memory MongoDB instance using `mongodb-memory-server`
-const { MongoMemoryServer } = require('mongodb-memory-server');
 let mongoServer;
 
 beforeAll(async () => {
@@ -27,7 +26,7 @@ afterAll(async () => {
     await mongoServer.stop();
 });
 
-afterEach(async () => {
+beforeEach(async () => {
     await User.deleteMany({});
 });
 
@@ -39,7 +38,7 @@ describe('User Controller', () => {
             await user.save();
 
             const res = await request(app).get('/users');
-            expect(res.statusCode).toEqual(200);
+            expect(res.statusCode).toBe(200);
             expect(res.body).toHaveLength(1);
             expect(res.body[0].email).toBe('test@example.com');
         });
@@ -50,7 +49,7 @@ describe('User Controller', () => {
             });
 
             const res = await request(app).get('/users');
-            expect(res.statusCode).toEqual(500);
+            expect(res.statusCode).toBe(500);
         });
     });
 
@@ -63,7 +62,7 @@ describe('User Controller', () => {
                 .post('/login')
                 .send({ email: 'test@example.com', password: 'password123' });
 
-            expect(res.statusCode).toEqual(200);
+            expect(res.statusCode).toBe(200);
             expect(res.body.token).toBeDefined();
 
             const decodedToken = jwt.verify(res.body.token, process.env.JWT_SECRET);
@@ -75,7 +74,7 @@ describe('User Controller', () => {
                 .post('/login')
                 .send({ email: 'nonexistent@example.com', password: 'password123' });
 
-            expect(res.statusCode).toEqual(404);
+            expect(res.statusCode).toBe(404);
             expect(res.body.message).toBe('User not found');
         });
 
@@ -87,7 +86,7 @@ describe('User Controller', () => {
                 .post('/login')
                 .send({ email: 'test@example.com', password: 'wrongpassword' });
 
-            expect(res.statusCode).toEqual(401);
+            expect(res.statusCode).toBe(401);
             expect(res.body.message).toBe('Invalid password');
         });
 
@@ -100,7 +99,7 @@ describe('User Controller', () => {
                 .post('/login')
                 .send({ email: 'test@example.com', password: 'password123' });
 
-            expect(res.statusCode).toEqual(500);
+            expect(res.statusCode).toBe(500);
             expect(res.body.message).toBe('Error logging in');
         });
     });
