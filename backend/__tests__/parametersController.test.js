@@ -2,123 +2,117 @@ const request = require('supertest');
 const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
-
 const { updateParameters, getParameters } = require('../controllers/parametersController');
-const {jest} = require("globals");
-const {describe, it, expect, beforeEach} = jest;
 
-// Mock the fs and path modules
-jest.mock('fs').promises;
-jest.mock('path');
+// Mock the fs module
+jest.mock('fs', () => ({
+    promises: {
+        readFile: jest.fn(),
+        writeFile: jest.fn(),
+    },
+}));
 
+// Set up an Express app for testing
 const app = express();
 app.use(express.json());
 
-// Set up routes for testing
-app.post('/api/parameters/update', updateParameters);
-app.get('/api/parameters', getParameters);
-
-// Mock data
-const mockParameters = {
-    parameters: {
-        "preset1": { threshold1: 0.5, threshold2: 0.8 },
-    },
-};
+app.post('/parameters/update', updateParameters);
+app.get('/parameters', getParameters);
 
 describe('Parameters Controller', () => {
 
-    beforeEach(() => {
-        // Mock the path to parameters.json
-        path.join.mockReturnValue('/fake/path/parameters.json');
-    });
+    describe('GET /parameters', () => {
+        it('should return the parameters from the file', async () => {
+            const mockData = JSON.stringify({ parameters: { preset1: { threshold1: 0.5 } } });
+            fs.readFile.mockResolvedValue(mockData);
 
-    describe('updateParameters', () => {
-        it('should update parameters successfully when valid data is provided', async () => {
-            const newParameters = { threshold1: 0.6, threshold2: 0.9 };
-
-            fs.readFile.mockResolvedValue(JSON.stringify(mockParameters));
-            fs.writeFile.mockResolvedValue(undefined); // No return value expected from writeFile
-
-            const res = await request(app)
-                .post('/api/parameters/update')
-                .send({
-                    preset_name: 'preset1',
-                    defekt_proportion_thresholds: newParameters,
-                });
+            const res = await request(app).get('/parameters');
 
             expect(res.statusCode).toBe(200);
-            expect(res.body).toEqual({ message: 'Parameters updated successfully' });
+            expect(res.body).toEqual({ preset1: { threshold1: 0.5 } });
+            expect(fs.readFile).toHaveBeenCalledWith(path.join(__dirname, '../models/parameters.json'), 'utf8');
+        });
+
+        it('should handle errors while reading the parameters file', async () => {
+            fs.readFile.mockRejectedValue(new Error('File read error'));
+
+            const res = await request(app).get('/parameters');
+
+            expect(res.statusCode).toBe(500);
+            expect(res.body.message).toBe('Error reading parameters file');
+        });
+    });
+
+    describe('POST /parameters/update', () => {
+        const mockParameters = {
+            parameters: {
+                preset1: { threshold1: 0.5, threshold2: 0.8 },
+            },
+        };
+
+        const mockSchema = {
+            thresholds: {
+                threshold1: { type: 'number', min: 0, max: 1 },
+                threshold2: { type: 'number', min: 0, max: 1 },
+            },
+        };
+
+        beforeEach(() => {
+            jest.resetModules();
+            jest.clearAllMocks();
+            jest.mock('../models/parameters', () => mockSchema);
+        });
+
+        it('should update the parameters if valid', async () => {
+            fs.readFile.mockResolvedValue(JSON.stringify(mockParameters));
+            const updatedThresholds = { threshold1: 0.6, threshold2: 0.7 };
+
+            const res = await request(app)
+                .post('/parameters/update')
+                .send({ preset_name: 'preset1', defekt_proportion_thresholds: updatedThresholds });
+
+            expect(res.statusCode).toBe(200);
+            expect(res.body.message).toBe('Parameters updated successfully');
             expect(fs.writeFile).toHaveBeenCalledWith(
-                '/fake/path/parameters.json',
-                JSON.stringify({ parameters: { preset1: newParameters } }, null, 4),
+                path.join(__dirname, '../models/parameters.json'),
+                JSON.stringify({
+                    parameters: { preset1: updatedThresholds },
+                }, null, 4),
                 'utf8'
             );
         });
 
         it('should return 400 if the preset is not found', async () => {
-            const newParameters = { threshold1: 0.6, threshold2: 0.9 };
-
             fs.readFile.mockResolvedValue(JSON.stringify(mockParameters));
 
             const res = await request(app)
-                .post('/api/parameters/update')
-                .send({
-                    preset_name: 'nonexistent_preset',
-                    defekt_proportion_thresholds: newParameters,
-                });
+                .post('/parameters/update')
+                .send({ preset_name: 'preset2', defekt_proportion_thresholds: { threshold1: 0.5, threshold2: 0.7 } });
 
             expect(res.statusCode).toBe(400);
-            expect(res.body).toEqual({ message: 'Preset is not found' });
+            expect(res.body.message).toBe('Preset is not found');
         });
 
         it('should return 400 if the parameters are invalid', async () => {
-            const invalidParameters = { threshold1: 1.5, threshold2: 0.9 };
-
             fs.readFile.mockResolvedValue(JSON.stringify(mockParameters));
 
             const res = await request(app)
-                .post('/api/parameters/update')
-                .send({
-                    preset_name: 'preset1',
-                    defekt_proportion_thresholds: invalidParameters,
-                });
+                .post('/parameters/update')
+                .send({ preset_name: 'preset1', defekt_proportion_thresholds: { threshold1: 1.5, threshold2: 2 } });
 
             expect(res.statusCode).toBe(400);
-            expect(res.body).toEqual({ message: 'Invalid parameters format or values out of range' });
+            expect(res.body.message).toBe('Invalid parameters format or values out of range');
         });
 
-        it('should return 500 if there is an error reading or writing the file', async () => {
+        it('should handle errors while reading or writing the file', async () => {
             fs.readFile.mockRejectedValue(new Error('File read error'));
 
             const res = await request(app)
-                .post('/api/parameters/update')
-                .send({
-                    preset_name: 'preset1',
-                    defekt_proportion_thresholds: { threshold1: 0.6, threshold2: 0.9 },
-                });
+                .post('/parameters/update')
+                .send({ preset_name: 'preset1', defekt_proportion_thresholds: { threshold1: 0.5, threshold2: 0.7 } });
 
             expect(res.statusCode).toBe(500);
-            expect(res.body).toEqual({ message: 'Error reading or writing file', error: {} });
-        });
-    });
-
-    describe('getParameters', () => {
-        it('should return the parameters successfully', async () => {
-            fs.readFile.mockResolvedValue(JSON.stringify(mockParameters));
-
-            const res = await request(app).get('/api/parameters');
-
-            expect(res.statusCode).toBe(200);
-            expect(res.body).toEqual(mockParameters.parameters);
-        });
-
-        it('should return 500 if there is an error reading the file', async () => {
-            fs.readFile.mockRejectedValue(new Error('File read error'));
-
-            const res = await request(app).get('/api/parameters');
-
-            expect(res.statusCode).toBe(500);
-            expect(res.body).toEqual({ message: 'Error reading parameters file', error: {} });
+            expect(res.body.message).toBe('Error reading or writing file');
         });
     });
 });
