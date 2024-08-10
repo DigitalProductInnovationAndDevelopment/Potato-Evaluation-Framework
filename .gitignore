@@ -33,3 +33,4 @@ lerna-debug.log*
 
 # Coverage directory used by testing tools
 coverage/
+backend/models/parameters.json

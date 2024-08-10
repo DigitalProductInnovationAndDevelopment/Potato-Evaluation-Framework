@@ -12,7 +12,7 @@
             "stone": 0.5
         },
         "preset_0": {
-            "greening": 0.0,
+            "greening": 0,
             "dry_rot": 0.1,
             "wet_rot": 0,
             "wire_worm": 0,
@@ -68,7 +68,7 @@
         },
         "preset_5": {
             "greening": 0.5,
-            "dry_rot": 0.1,
+            "dry_rot": 0.9,
             "wet_rot": 0,
             "wire_worm": 0,
             "malformed": 0.7,
