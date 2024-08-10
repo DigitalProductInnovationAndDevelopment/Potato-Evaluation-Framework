@@ -23,9 +23,13 @@ describe('ParameterSelection Component', () => {
     test('renders and handles slider and text field changes', async () => {
         render(<ParameterSelection />);
 
-        // Wait for the component to finish loading and display content
+        // Wait for the slider to appear
         await waitFor(() => {
             expect(screen.getByRole('slider')).toBeInTheDocument();
+        });
+
+        // Wait for the text field to appear
+        await waitFor(() => {
             expect(screen.getByRole('spinbutton')).toBeInTheDocument(); // This targets the number input (TextField)
         });
 
