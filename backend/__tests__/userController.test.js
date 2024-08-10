@@ -3,7 +3,7 @@ const express = require('express');
 const { getAllUsers, loginUser } = require('../controllers/userController');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
-const jest = require('jest');
+const {jest} = require("globals");
 
 const {describe, it, expect} = jest;
 

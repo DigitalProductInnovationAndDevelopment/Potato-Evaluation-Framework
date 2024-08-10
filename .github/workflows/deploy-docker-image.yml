@@ -1,11 +1,9 @@
 name: Deploy Docker Image
 
 on:
-  push:
-    branches:
-      - main
   workflow_run:
-    workflows: [ "Run Tests" ]
+    workflows:
+      - Run Tests
     branches: [ main ]
     types:
       - completed  # Docker image should be built after CI jobs are successful.
