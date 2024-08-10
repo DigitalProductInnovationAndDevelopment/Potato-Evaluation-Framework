@@ -15,10 +15,18 @@ app.post('/login', loginUser);
 
 let mongoServer;
 
+const email =  'test@example.com';
+const password =  'password123';
+
 beforeAll(async () => {
     mongoServer = await MongoMemoryServer.create();
     const uri = mongoServer.getUri();
     await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+    process.env = {JWT_SECRET: 'test_secret' };
+
+    const user = new User({ email: email, password: password, isAdmin: false });
+    await user.save();
 });
 
 afterAll(async () => {
@@ -26,21 +34,14 @@ afterAll(async () => {
     await mongoServer.stop();
 });
 
-beforeEach(async () => {
-    await User.deleteMany({});
-});
-
 describe('User Controller', () => {
 
     describe('GET /users', () => {
         it('should return a list of all users', async () => {
-            const user = new User({ email: 'test@example.com', password: 'password123', isAdmin: false });
-            await user.save();
-
             const res = await request(app).get('/users');
             expect(res.statusCode).toBe(200);
             expect(res.body).toHaveLength(1);
-            expect(res.body[0].email).toBe('test@example.com');
+            expect(res.body[0].email).toBe(email);
         });
 
         it('should handle errors', async () => {
@@ -55,16 +56,12 @@ describe('User Controller', () => {
 
     describe('POST /login', () => {
         it('should return a token for valid credentials', async () => {
-            const user = new User({ email: 'test@example.com', password: 'password123', isAdmin: false });
-            await user.save();
-
             const res = await request(app)
                 .post('/login')
-                .send({ email: 'test@example.com', password: 'password123' });
+                .send({ email: email, password: password });
 
             expect(res.statusCode).toBe(200);
             expect(res.body.token).toBeDefined();
-
             const decodedToken = jwt.verify(res.body.token, process.env.JWT_SECRET);
             expect(decodedToken.email).toBe('test@example.com');
         });
@@ -79,12 +76,9 @@ describe('User Controller', () => {
         });
 
         it('should return 401 for invalid password', async () => {
-            const user = new User({ email: 'test@example.com', password: 'password123', isAdmin: false });
-            await user.save();
-
             const res = await request(app)
                 .post('/login')
-                .send({ email: 'test@example.com', password: 'wrongpassword' });
+                .send({ email: email, password: 'wrongpassword' });
 
             expect(res.statusCode).toBe(401);
             expect(res.body.message).toBe('Invalid password');
