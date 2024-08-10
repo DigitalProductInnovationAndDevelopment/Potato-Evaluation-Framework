@@ -3,10 +3,8 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
 const { updateParameters, getParameters } = require('../controllers/parametersController');
-const {jest} = require("globals");
-const { describe, it, expect, beforeEach } = {jest}
 
-// Mock the fs module
+// Mock the fs module using jest.mock
 jest.mock('fs', () => ({
     promises: {
         readFile: jest.fn(),
@@ -25,7 +23,7 @@ describe('Parameters Controller', () => {
 
     describe('GET /parameters', () => {
         it('should return the parameters from the file', async () => {
-            const mockData = JSON.stringify({ parameters: { preset1: { threshold1: 0.5 } } });
+            const mockData = JSON.stringify({ preset1: { threshold1: 0.5 } });
             fs.readFile.mockResolvedValue(mockData);
 
             const res = await request(app).get('/parameters');
@@ -47,9 +45,7 @@ describe('Parameters Controller', () => {
 
     describe('POST /parameters/update', () => {
         const mockParameters = {
-            parameters: {
-                preset1: { threshold1: 0.5, threshold2: 0.8 },
-            },
+            preset1: { threshold1: 0.5, threshold2: 0.8 },
         };
 
         const mockSchema = {
@@ -78,7 +74,7 @@ describe('Parameters Controller', () => {
             expect(fs.writeFile).toHaveBeenCalledWith(
                 path.join(__dirname, '../models/parameters.json'),
                 JSON.stringify({
-                    parameters: { preset1: updatedThresholds },
+                    preset1: updatedThresholds,
                 }, null, 4),
                 'utf8'
             );
