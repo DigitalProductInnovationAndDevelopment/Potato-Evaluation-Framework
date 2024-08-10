@@ -4,7 +4,7 @@ import ParameterSelection from '../parameterSelection/ParameterSelection';
 import Statistics from "../statistics/Statistics";
 import { mockData } from "../statistics/mockData";
 
-function mainDashboard() {
+function MainDashboard() {
   return (
     <div id="dashboard" className="dashboard">
         <div className="row">
@@ -19,5 +19,5 @@ function mainDashboard() {
   )
 }
 
-export default mainDashboard;
+export default MainDashboard;
 

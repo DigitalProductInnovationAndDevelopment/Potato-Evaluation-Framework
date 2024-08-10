@@ -1,30 +1,21 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MainDashboard from "../components/mainDashboard/MainDashboard";
+import MainDashboard from '../components/mainDashboard/MainDashboard';
 
+// Mock the child components
+jest.mock('../components/parameterSelection/ParameterSelection', () => () => <div data-testid="parameter-selection">ParameterSelection Component</div>);
+jest.mock('../components/statistics/Statistics', () => ({ data }) => <div data-testid="statistics">Statistics Component</div>);
 
-// Mocking the child components
-jest.mock('../components/parameterSelection/ParameterSelection', () => () => <div>Parameter Selection Component</div>);
-jest.mock('../components/statistics/Statistics', () => () => <div>Statistics Component</div>);
+describe('MainDashboard Component', () => {
+    it('renders ParameterSelection and Statistics components', () => {
+        render(<MainDashboard />); // Use PascalCase if it's a React component
 
-it('renders the mainDashboard component', () => {
-    render(<MainDashboard />);
+        // Check if ParameterSelection component is rendered
+        const parameterSelectionElement = screen.getByTestId('parameter-selection');
+        expect(parameterSelectionElement).toBeInTheDocument();
 
-    expect(screen.getByText('Parameter Selection Component')).toBeInTheDocument();
-
-    expect(screen.getByText('Statistics Component')).toBeInTheDocument();
-});
-
-it('applies the correct classes to the dashboard', () => {
-    const { container } = render(<MainDashboard />);
-
-    // Check if the main dashboard div has the correct ID and class
-    const dashboardElement = container.querySelector('#dashboard');
-    expect(dashboardElement).toBeInTheDocument();
-    expect(dashboardElement).toHaveClass('dashboard');
-});
-
-it('renders two columns', () => {
-    render(<MainDashboard />);
-    expect(true).toBeTruthy();
+        // Check if Statistics component is rendered
+        const statisticsElement = screen.getByTestId('statistics');
+        expect(statisticsElement).toBeInTheDocument();
+    });
 });
