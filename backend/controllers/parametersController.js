@@ -20,7 +20,7 @@ const updateParameters = async (req, res) => {
     }
 
     // Check if preset is existing
-    if (!parameters.parameters.hasOwnProperty(preset_name)) {
+    if (!Object.prototype.hasOwnProperty.call(parameters.parameters, preset_name)) {
       return res.status(400).json({ message: "Preset is not found" });
     }
 
