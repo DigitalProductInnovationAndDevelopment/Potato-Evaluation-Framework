@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
 const { updateParameters, getParameters } = require('../controllers/parametersController');
+const {jest} = require("globals");
+const { describe, it, expect, beforeEach } = {jest}
 
 // Mock the fs module
 jest.mock('fs', () => ({

@@ -5,6 +5,9 @@ const jwt = require('jsonwebtoken');
 const { getAllUsers, loginUser } = require('../controllers/userController');
 const User = require('../models/User');
 
+const {jest} = require("globals");
+const { describe, it, expect, beforeAll, afterAll, afterEach } = {jest}
+
 // Set up an Express app for testing
 const app = express();
 app.use(express.json());
