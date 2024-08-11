@@ -4,6 +4,6 @@ const { createTrackingHistory, getLatestTrackingHistory  } = require("./../contr
 const {auth} = require("../middlewares/auth");
 
 router.post("/", auth, createTrackingHistory);
-router.get("/get-latest-tracking-history", auth, getLatestTrackingHistory);
+router.get("/latest", auth, getLatestTrackingHistory);
 
 module.exports = router;
