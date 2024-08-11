@@ -84,7 +84,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const defaultTheme = createTheme();
 
-export default function Dashboard({ view }) {
+export default function Dashboard({ view, onLogout }) {
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -121,7 +121,7 @@ export default function Dashboard({ view }) {
                         >
                             Karevo Dashboard
                         </Typography>
-                        <IconButton color="inherit">
+                        <IconButton color="inherit" onClick={onLogout}>
                             <Badge color="secondary">
                                 <Logout />
                             </Badge>

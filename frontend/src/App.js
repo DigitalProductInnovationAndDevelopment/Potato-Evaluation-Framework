@@ -20,6 +20,7 @@ function App() {
     const handleLogout = () => {
         setIsLoggedIn(false);
         localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('token');
     };
 
     return (
@@ -29,8 +30,8 @@ function App() {
                     <>
                         <div className="main-content">
                             <Routes>
-                                <Route path="/" element={<Dashboard />} />
-                                <Route path="/adminView" element={<Dashboard view="admin" />} />
+                                <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
+                                <Route path="/adminView" element={<Dashboard onLogout={handleLogout} view="admin" />} />
                             </Routes>
                         </div>
                     </>
