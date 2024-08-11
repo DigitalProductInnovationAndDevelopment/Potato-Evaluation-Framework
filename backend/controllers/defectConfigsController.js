@@ -3,7 +3,7 @@ const DefectConfigModel = require("../models/DefectConfigModel");
 
 const getDefectConfig = async (req, res) => {
     try {
-        const defectConfig = await DefectConfigModel.findOne();
+        const defectConfig = await DefectConfigModel.findOne().exec();
         res.status(200).json(defectConfig);
     } catch (error) {
         res.status(500).json({ message: error.message });

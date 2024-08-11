@@ -13,8 +13,8 @@ const Input = styled(MuiInput)`
     width: 42px;
 `;
 
-export default function DefectConfigSlider({ label = '', description = '' }) {
-    const [value, setValue] = React.useState(30);
+export default function DefectConfigSlider({ label = '', description = '', defaultValue = 0 }) {
+    const [value, setValue] = React.useState(defaultValue);
 
     const handleSliderChange = (event, newValue) => {
         setValue(newValue);
@@ -54,7 +54,10 @@ export default function DefectConfigSlider({ label = '', description = '' }) {
                         value={typeof value === 'number' ? value : 0}
                         onChange={handleSliderChange}
                         aria-labelledby="input-slider"
-                        size={"medium"}
+                        size="medium"
+                        min={0}
+                        max={1}
+                        step={0.01}
                     />
                 </Grid>
                 <Grid item>
@@ -64,9 +67,9 @@ export default function DefectConfigSlider({ label = '', description = '' }) {
                         onChange={handleInputChange}
                         onBlur={handleBlur}
                         inputProps={{
-                            step: 10,
+                            step: 0.01,
                             min: 0,
-                            max: 100,
+                            max: 1,
                             type: 'number',
                             'aria-labelledby': 'input-slider',
                         }}
