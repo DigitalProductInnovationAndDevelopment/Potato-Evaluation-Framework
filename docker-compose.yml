@@ -3,7 +3,7 @@ name: 'karevo-dashboard'
 services:
   backend:
     build: ./backend
-    image: umutozdemir00/karevo-dashboard-api:latest
+    image: dpidkarevo2024/karevo-dashboard-api:latest
     container_name: karevo-dashboard-api
     ports:
       - '8080:8080'
@@ -20,7 +20,7 @@ services:
 
   frontend:
     build: ./frontend
-    image: umutozdemir00/karevo-dashboard-frontend:latest
+    image: dpidkarevo2024/karevo-dashboard-frontend:latest
     container_name: karevo-dashboard-web
     ports:
       - '3000:3000'

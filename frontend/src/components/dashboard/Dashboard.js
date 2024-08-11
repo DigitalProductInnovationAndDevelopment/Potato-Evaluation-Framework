@@ -16,11 +16,13 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems} from './listItems';
+import { mainListItems } from './listItems';
 import TrackingHistory from '../trackingHistory/TrackingHistory';
 import DefectConfig from '../defectConfig/DefectConfig';
 import AdminView from './AdminView';
 import { Logout } from "@mui/icons-material";
+
+import logo from '../../logo.svg';
 
 function Copyright(props) {
     return (
@@ -140,6 +142,10 @@ export default function Dashboard({ view, onLogout }) {
                             <ChevronLeftIcon />
                         </IconButton>
                     </Toolbar>
+                    <Divider />
+                    <Box sx={{ p: 2, textAlign: 'center' }}>
+                        <img src={logo} alt="Karevo Logo" style={{ maxWidth: '100%', height: 'auto' }} />
+                    </Box>
                     <Divider />
                     <List component="nav">
                         {mainListItems}

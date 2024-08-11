@@ -5,28 +5,35 @@ const jwt = require('jsonwebtoken');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const User = require('../models/User');
 const { getAllUsers, loginUser } = require('../controllers/userController');
-
+const { auth } = require('../middlewares/auth');
 
 // Set up an Express app for testing
 const app = express();
 app.use(express.json());
-app.get('/users', getAllUsers);
+
+// Apply auth middleware
+app.get('/users', auth, getAllUsers);
 app.post('/login', loginUser);
 
 let mongoServer;
 
-const email =  'test@example.com';
-const password =  'password123';
+const email = 'test@example.com';
+const password = 'password123';
+const JWT_SECRET = 'test_secret';
+let validToken;
 
 beforeAll(async () => {
     mongoServer = await MongoMemoryServer.create();
     const uri = mongoServer.getUri();
-    await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(uri, {});
 
-    process.env = {JWT_SECRET: 'test_secret' };
+    process.env.JWT_SECRET = JWT_SECRET;
 
     const user = new User({ email: email, password: password, isAdmin: false });
     await user.save();
+
+    // Generate a valid token for authentication
+    validToken = jwt.sign({ email: email, id: user._id }, JWT_SECRET);
 });
 
 afterAll(async () => {
@@ -34,14 +41,23 @@ afterAll(async () => {
     await mongoServer.stop();
 });
 
-describe('User Controller', () => {
+describe('User Controller with Auth Middleware', () => {
 
     describe('GET /users', () => {
-        it('should return a list of all users', async () => {
-            const res = await request(app).get('/users');
+        it('should return a list of all users with valid token', async () => {
+            const res = await request(app)
+                .get('/users')
+                .set('Authorization', `Bearer ${validToken}`);
+
             expect(res.statusCode).toBe(200);
             expect(res.body).toHaveLength(1);
             expect(res.body[0].email).toBe(email);
+        });
+
+        it('should return 401 if no token is provided', async () => {
+            const res = await request(app).get('/users');
+            expect(res.statusCode).toBe(401);
+            expect(res.body.message).toBe('Access denied. No token provided.');
         });
 
         it('should handle errors', async () => {
@@ -49,7 +65,10 @@ describe('User Controller', () => {
                 throw new Error('Database error');
             });
 
-            const res = await request(app).get('/users');
+            const res = await request(app)
+                .get('/users')
+                .set('Authorization', `Bearer ${validToken}`);
+
             expect(res.statusCode).toBe(500);
         });
     });
@@ -63,7 +82,7 @@ describe('User Controller', () => {
             expect(res.statusCode).toBe(200);
             expect(res.body.token).toBeDefined();
             const decodedToken = jwt.verify(res.body.token, process.env.JWT_SECRET);
-            expect(decodedToken.email).toBe('test@example.com');
+            expect(decodedToken.email).toBe(email);
         });
 
         it('should return 404 if user not found', async () => {

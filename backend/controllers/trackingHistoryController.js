@@ -1,9 +1,7 @@
 const TrackingHistoryModel = require("../models/TrackingHistory");
 
 const createTrackingHistory = async (req, res) => {
-    const { trackingHistorySchema } = req.body;
-    const newModel = new TrackingHistoryModel(trackingHistorySchema);
-
+    const newModel = new TrackingHistoryModel(req.body);
     try {
         await newModel.save();
         res.status(201).json(newModel);
