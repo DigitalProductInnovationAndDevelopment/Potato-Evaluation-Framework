@@ -19,7 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
-import Orders from './Orders';
+import DefectConfig from '../defectConfig/DefectConfig';
 import {Logout} from "@mui/icons-material";
 
 function Copyright(props) {
@@ -188,10 +188,10 @@ export default function Dashboard() {
                                     <Deposits />
                                 </Paper>
                             </Grid>
-                            {/* Recent Orders */}
+                            {/* Recent DefectConfig */}
                             <Grid item xs={12}>
                                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                                    <Orders />
+                                    <DefectConfig />
                                 </Paper>
                             </Grid>
                         </Grid>

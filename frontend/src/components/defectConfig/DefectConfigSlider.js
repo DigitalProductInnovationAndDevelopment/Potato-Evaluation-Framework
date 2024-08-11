@@ -13,22 +13,30 @@ const Input = styled(MuiInput)`
     width: 42px;
 `;
 
-export default function DefectConfigSlider({ label = '', description = '' }) {
-    const [value, setValue] = React.useState(30);
+export default function DefectConfigSlider({ label = '', description = '', value = 0, onChange }) {
+    // Use effect to sync internal state with external value
+    React.useEffect(() => {
+        setSliderValue(value);
+    }, [value]);
+
+    const [sliderValue, setSliderValue] = React.useState(value);
 
     const handleSliderChange = (event, newValue) => {
-        setValue(newValue);
+        setSliderValue(newValue);
+        onChange(newValue); // Notify parent of the new value
     };
 
     const handleInputChange = (event) => {
-        setValue(event.target.value === '' ? 0 : Number(event.target.value));
+        const inputValue = event.target.value === '' ? 0 : Number(event.target.value);
+        setSliderValue(inputValue);
+        onChange(inputValue); // Notify parent of the new value
     };
 
     const handleBlur = () => {
-        if (value < 0) {
-            setValue(0);
-        } else if (value > 100) {
-            setValue(100);
+        if (sliderValue < 0) {
+            setSliderValue(0);
+        } else if (sliderValue > 100) {
+            setSliderValue(100);
         }
     };
 
@@ -51,15 +59,17 @@ export default function DefectConfigSlider({ label = '', description = '' }) {
             <Grid container spacing={2} alignItems="center">
                 <Grid item xs>
                     <Slider
-                        value={typeof value === 'number' ? value : 0}
+                        value={sliderValue}
                         onChange={handleSliderChange}
                         aria-labelledby="input-slider"
                         size={"medium"}
+                        min={0}
+                        max={100}
                     />
                 </Grid>
                 <Grid item>
                     <Input
-                        value={value}
+                        value={sliderValue}
                         size="small"
                         onChange={handleInputChange}
                         onBlur={handleBlur}
