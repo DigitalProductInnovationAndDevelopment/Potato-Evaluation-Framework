@@ -25,7 +25,10 @@ const auth = async (req, res, next) => {
 };
 
 const adminOnly = async (req, res, next) => {
-  if (req.user.email === process.env.ADMIN_EMAIL && req.user.isAdmin) {
+  console.log(req.user.email);
+  console.log(req.user.isAdmin);
+  console.log(process.env.ADMIN_EMAI);
+  if (req.user.isAdmin) {
     next();
   } else {
     res.status(403).json({ message: "Access denied. Admins only." });
