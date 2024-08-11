@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import 'remixicon/fonts/remixicon.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
-import './App.css';
-import Header from './components/header/Header';
 import SignInPage from "./components/signin/Signin";
-import MainDashboard from "./components/mainDashboard/MainDashboard";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Dashboard from "./components/dashboard/Dashboard";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -30,13 +24,12 @@ function App() {
 
     return (
         <Router>
-            <div className="app">
-                {isLoggedIn ? (
+            <div>
+                {true ? (
                     <>
-                        <Header onLogout={handleLogout} />
                         <div className="main-content">
                             <Routes>
-                                <Route path="/" element={<MainDashboard />} />
+                                <Route path="/" element={<Dashboard />} />
                             </Routes>
                         </div>
                     </>
