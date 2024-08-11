@@ -36,6 +36,7 @@ export default function AdminView() {
     password: '',
     isAdmin: false,
   });
+  const [error, setError] = useState(''); // Hata mesajı için state
 
   useEffect(() => {
     fetchUsers();
@@ -63,6 +64,7 @@ export default function AdminView() {
       password: '',
       isAdmin: false,
     });
+    setError(''); // Modal kapandığında hatayı temizle
   };
 
   const handleChange = (e) => {
@@ -72,7 +74,18 @@ export default function AdminView() {
     });
   };
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
   const handleSave = async () => {
+    // E-posta validasyonunu kontrol et
+    if (!validateEmail(selectedUser.email)) {
+      setError('Invalid email address'); // Hata mesajını set et
+      return;
+    }
+
     try {
       if (editMode) {
         await axios.put(`http://localhost:8080/adminView/users/${selectedUser.id}`, selectedUser, {
@@ -93,14 +106,19 @@ export default function AdminView() {
   };
 
   const handleEdit = (user) => {
-    setSelectedUser(user);
+    setSelectedUser({
+      id: user._id,
+      email: user.email,
+      password: user.password,
+      isAdmin: user.isAdmin,
+    });
     setEditMode(true);
     handleOpen();
   };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`'http://localhost:8080/adminView/users'${id}`, {
+      await axios.delete(`http://localhost:8080/adminView/users/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`, // Attach the token to the Authorization header
         }});
@@ -162,6 +180,7 @@ export default function AdminView() {
           <Typography variant="h6" component="h2" gutterBottom>
             {editMode ? 'Edit User' : 'Add User'}
           </Typography>
+          {error && <Typography color="error" gutterBottom>{error}</Typography>} {/* Hata mesajını göster */}
           <TextField
             label="Email"
             name="email"
@@ -169,6 +188,7 @@ export default function AdminView() {
             onChange={handleChange}
             fullWidth
             sx={{ marginBottom: 2 }}
+            error={Boolean(error)} // TextField üzerinde hata olduğunda kırmızı çizgi göstermek için
           />
           <TextField
             label="Password"
