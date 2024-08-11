@@ -24,4 +24,12 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = { auth };
+const adminOnly = async (req, res, next) => {
+  if (req.user.email === "admin@example.com" && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(403).json({ message: "Access denied. Admins only." });
+  }
+};
+
+module.exports = { auth, adminOnly };
