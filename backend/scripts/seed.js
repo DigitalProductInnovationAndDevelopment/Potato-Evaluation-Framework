@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const User = require("../models/User");
 const DefectConfig = require("../models/DefectConfigModel");
 const DetectionModel = require("../models/DetectionModel");
+const TrackingHistoryModel = require("../models/TrackingHistory");
 require("dotenv").config();
 
 const seedDatabase = async () => {
@@ -69,6 +70,28 @@ const seedDatabase = async () => {
     } else {
       console.log("Default defect config already exists.");
     }
+
+    const trackingHistoryExist = await TrackingHistoryModel.findOne();
+    if (!trackingHistoryExist) {
+      await TrackingHistoryModel.create({
+        goodPotatoes: 671,
+        badPotatoes: 329,
+        greening: 43,
+        dryRot: 42,
+        wetRot: 35,
+        wireWorm: 37,
+        malformed: 51,
+        growthCrack: 29,
+        mechanicalDamage: 26,
+        dirtClod: 30,
+        stone: 36,
+        trackingDate: Date.now(),
+      });
+      console.log("Tracking history created.");
+    } else {
+      console.log("Tracking history already exists.");
+    }
+
   } catch (err) {
     console.log(err);
   } finally {
