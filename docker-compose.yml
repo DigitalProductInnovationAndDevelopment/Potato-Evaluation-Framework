@@ -1,4 +1,4 @@
-name: 'karevo-dashboard'
+version: '3.8'
 
 services:
   backend:
