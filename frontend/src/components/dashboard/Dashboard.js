@@ -17,7 +17,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
+import TrackingHistory from '../trackingHistory/TrackingHistory';
 import Deposits from './Deposits';
 import DefectConfig from '../defectConfig/DefectConfig';
 import AdminView from './AdminView';
@@ -167,7 +167,7 @@ export default function Dashboard({ view, onLogout }) {
 
                             <><Grid container spacing={3}>
                                 {/* Chart */}
-                                <Grid item xs={12} md={8} lg={9}>
+                                <Grid item xs={12} md={8} lg={12}>
                                     <Paper
                                         sx={{
                                             p: 2,
@@ -176,20 +176,7 @@ export default function Dashboard({ view, onLogout }) {
                                             height: 240,
                                         }}
                                     >
-                                        <Chart />
-                                    </Paper>
-                                </Grid>
-                                {/* Recent Deposits */}
-                                <Grid item xs={12} md={4} lg={3}>
-                                    <Paper
-                                        sx={{
-                                            p: 2,
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            height: 240,
-                                        }}
-                                    >
-                                        <Deposits />
+                                        <TrackingHistory />
                                     </Paper>
                                 </Grid>
                                 {/* Recent DefectConfig */}
