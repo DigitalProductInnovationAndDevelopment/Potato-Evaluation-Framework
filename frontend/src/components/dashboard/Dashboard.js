@@ -20,7 +20,8 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import DefectConfig from '../defectConfig/DefectConfig';
-import {Logout} from "@mui/icons-material";
+import AdminView from './AdminView';
+import { Logout } from "@mui/icons-material";
 
 function Copyright(props) {
     return (
@@ -83,7 +84,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function Dashboard({ view }) {
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -161,41 +162,44 @@ export default function Dashboard() {
                 >
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        <Grid container spacing={3}>
-                            {/* Chart */}
-                            <Grid item xs={12} md={8} lg={9}>
-                                <Paper
-                                    sx={{
-                                        p: 2,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        height: 240,
-                                    }}
-                                >
-                                    <Chart />
-                                </Paper>
-                            </Grid>
-                            {/* Recent Deposits */}
-                            <Grid item xs={12} md={4} lg={3}>
-                                <Paper
-                                    sx={{
-                                        p: 2,
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        height: 240,
-                                    }}
-                                >
-                                    <Deposits />
-                                </Paper>
-                            </Grid>
-                            {/* Recent DefectConfig */}
-                            <Grid item xs={12}>
-                                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                                    <DefectConfig />
-                                </Paper>
-                            </Grid>
-                        </Grid>
-                        <Copyright sx={{ pt: 4 }} />
+                        {view === 'admin' ? (
+                            <AdminView />) : (
+
+                            <><Grid container spacing={3}>
+                                {/* Chart */}
+                                <Grid item xs={12} md={8} lg={9}>
+                                    <Paper
+                                        sx={{
+                                            p: 2,
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            height: 240,
+                                        }}
+                                    >
+                                        <Chart />
+                                    </Paper>
+                                </Grid>
+                                {/* Recent Deposits */}
+                                <Grid item xs={12} md={4} lg={3}>
+                                    <Paper
+                                        sx={{
+                                            p: 2,
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            height: 240,
+                                        }}
+                                    >
+                                        <Deposits />
+                                    </Paper>
+                                </Grid>
+                                {/* Recent DefectConfig */}
+                                <Grid item xs={12}>
+                                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                                        <DefectConfig />
+                                    </Paper>
+                                </Grid>
+                            </Grid><Copyright sx={{ pt: 4 }} /></>
+                        )}
                     </Container>
                 </Box>
             </Box>

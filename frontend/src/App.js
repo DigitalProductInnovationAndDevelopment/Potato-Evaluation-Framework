@@ -25,11 +25,12 @@ function App() {
     return (
         <Router>
             <div>
-                {true ? (
+                {isLoggedIn ? (
                     <>
                         <div className="main-content">
                             <Routes>
                                 <Route path="/" element={<Dashboard />} />
+                                <Route path="/adminView" element={<Dashboard view="admin" />} />
                             </Routes>
                         </div>
                     </>
