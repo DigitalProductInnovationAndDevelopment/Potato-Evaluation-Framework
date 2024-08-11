@@ -16,7 +16,7 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems} from './listItems';
 import TrackingHistory from '../trackingHistory/TrackingHistory';
 import DefectConfig from '../defectConfig/DefectConfig';
 import AdminView from './AdminView';
@@ -144,7 +144,6 @@ export default function Dashboard({ view, onLogout }) {
                     <List component="nav">
                         {mainListItems}
                         <Divider sx={{ my: 1 }} />
-                        {secondaryListItems}
                     </List>
                 </Drawer>
                 <Box

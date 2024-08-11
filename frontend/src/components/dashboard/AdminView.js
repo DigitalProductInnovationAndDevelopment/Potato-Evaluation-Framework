@@ -36,7 +36,7 @@ export default function AdminView() {
     password: '',
     isAdmin: false,
   });
-  const [error, setError] = useState(''); // Hata mesajı için state
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetchUsers();
@@ -46,7 +46,7 @@ export default function AdminView() {
     try {
       const response = await axios.get('http://localhost:8080/adminView/users', {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Attach the token to the Authorization header
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         }});
       setUsers(response.data);
     } catch (error) {
@@ -64,7 +64,7 @@ export default function AdminView() {
       password: '',
       isAdmin: false,
     });
-    setError(''); // Modal kapandığında hatayı temizle
+    setError('');
   };
 
   const handleChange = (e) => {
@@ -80,9 +80,8 @@ export default function AdminView() {
   };
 
   const handleSave = async () => {
-    // E-posta validasyonunu kontrol et
     if (!validateEmail(selectedUser.email)) {
-      setError('Invalid email address'); // Hata mesajını set et
+      setError('Invalid email address');
       return;
     }
 
@@ -90,12 +89,12 @@ export default function AdminView() {
       if (editMode) {
         await axios.put(`http://localhost:8080/adminView/users/${selectedUser.id}`, selectedUser, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`, // Attach the token to the Authorization header
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           }});
       } else {
         await axios.post('http://localhost:8080/adminView/users', selectedUser, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`, // Attach the token to the Authorization header
+            Authorization: `Bearer ${localStorage.getItem('token')}`, 
           }});
       }
       fetchUsers();
@@ -120,7 +119,7 @@ export default function AdminView() {
     try {
       await axios.delete(`http://localhost:8080/adminView/users/${id}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Attach the token to the Authorization header
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         }});
       fetchUsers();
     } catch (error) {
@@ -180,7 +179,7 @@ export default function AdminView() {
           <Typography variant="h6" component="h2" gutterBottom>
             {editMode ? 'Edit User' : 'Add User'}
           </Typography>
-          {error && <Typography color="error" gutterBottom>{error}</Typography>} {/* Hata mesajını göster */}
+          {error && <Typography color="error" gutterBottom>{error}</Typography>} {}
           <TextField
             label="Email"
             name="email"
@@ -188,7 +187,7 @@ export default function AdminView() {
             onChange={handleChange}
             fullWidth
             sx={{ marginBottom: 2 }}
-            error={Boolean(error)} // TextField üzerinde hata olduğunda kırmızı çizgi göstermek için
+            error={Boolean(error)}
           />
           <TextField
             label="Password"
