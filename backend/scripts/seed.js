@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
-const process = require('process')
+const DefectConfig = require("../models/DefectConfigModel");
 const DetectionModel = require("../models/DetectionModel");
 require("dotenv").config();
 
@@ -8,7 +8,7 @@ const seedDatabase = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
 
-    //seed initial users
+    // Seed initial users
     const admin = await User.findOne({ isAdmin: true });
     const client = await User.findOne({ isAdmin: false });
 
@@ -58,6 +58,16 @@ const seedDatabase = async () => {
       console.log("Model 2 Unloading created");
     } else {
       console.log("Model 2 Unloading already exists");
+    }
+
+    // Check and seed the default defect config
+    const defectConfig = await DefectConfig.findOne();
+
+    if (!defectConfig) {
+      await DefectConfig.create({});
+      console.log("Default defect config created with default values.");
+    } else {
+      console.log("Default defect config already exists.");
     }
   } catch (err) {
     console.log(err);

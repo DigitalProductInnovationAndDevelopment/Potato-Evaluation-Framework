@@ -6,6 +6,7 @@ const defectConfigSchema = new mongoose.Schema({
         type: Number,
         min: 0,
         max: 1,
+        default: 0.6
     },
     dryRot:  {
         type: Number,
