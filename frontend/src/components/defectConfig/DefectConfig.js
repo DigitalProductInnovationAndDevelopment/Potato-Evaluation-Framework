@@ -21,7 +21,10 @@ export default function DefectConfig() {
 
     React.useEffect(() => {
         // Fetch the config data from the backend
-        fetch('http://localhost:8080/defect-config')
+        fetch('http://localhost:8080/defect-config', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            }})
             .then((response) => response.json())
             .then((data) => {
                 // Filter out fields starting with "_"
@@ -58,6 +61,7 @@ export default function DefectConfig() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(postData),
         })
