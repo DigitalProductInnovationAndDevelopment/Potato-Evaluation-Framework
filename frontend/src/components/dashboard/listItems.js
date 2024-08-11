@@ -3,7 +3,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import SettingsIcon from '@mui/icons-material/Settings';
 import PeopleIcon from '@mui/icons-material/People';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import { Link as RouterLink } from 'react-router-dom';
@@ -15,12 +14,6 @@ export const mainListItems = (
                 <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Defect Config" />
         </ListItemButton>
         <ListItemButton component={RouterLink} to="/adminView">
             <ListItemIcon>
