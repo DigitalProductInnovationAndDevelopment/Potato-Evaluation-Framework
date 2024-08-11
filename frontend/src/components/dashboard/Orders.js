@@ -3,7 +3,6 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import {Slider} from "@mui/material";
 import DefectConfigSlider from "./DefectConfigSlider";
 
 // Generate Order Data
@@ -79,10 +78,6 @@ const rows = [
     ),
 ];
 
-function preventDefault(event) {
-    event.preventDefault();
-}
-
 export default function Orders() {
     return (
         <React.Fragment>
@@ -91,7 +86,7 @@ export default function Orders() {
                 <TableBody>
                     {rows.map((row) => (
                         <TableRow key={row.id}>
-                            <DefectConfigSlider label={'Greening'}   />
+                            <DefectConfigSlider label={'Greening'} description={'Description'}   />
                         </TableRow>
                     ))}
                 </TableBody>

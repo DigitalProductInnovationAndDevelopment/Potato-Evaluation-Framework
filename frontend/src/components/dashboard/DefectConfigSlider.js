@@ -13,7 +13,7 @@ const Input = styled(MuiInput)`
     width: 42px;
 `;
 
-export default function DefectConfigSlider({ label = 'Volume', infoText = 'Info about the slider' }) {
+export default function DefectConfigSlider({ label = '', description = '' }) {
     const [value, setValue] = React.useState(30);
 
     const handleSliderChange = (event, newValue) => {
@@ -41,7 +41,7 @@ export default function DefectConfigSlider({ label = 'Volume', infoText = 'Info 
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Tooltip title={infoText} arrow>
+                    <Tooltip title={description} arrow>
                         <IconButton>
                             <InfoIcon />
                         </IconButton>
