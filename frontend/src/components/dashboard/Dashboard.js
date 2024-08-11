@@ -18,7 +18,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, secondaryListItems } from './listItems';
 import TrackingHistory from '../trackingHistory/TrackingHistory';
-import Deposits from './Deposits';
 import DefectConfig from '../defectConfig/DefectConfig';
 import AdminView from './AdminView';
 import { Logout } from "@mui/icons-material";
