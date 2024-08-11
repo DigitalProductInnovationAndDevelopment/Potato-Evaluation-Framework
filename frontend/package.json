@@ -12,7 +12,6 @@
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
     "@mui/x-charts": "^7.12.1",
-    "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
     "axios": "^1.7.3",
@@ -20,6 +19,7 @@
     "bootstrap-icons": "^1.11.3",
     "boxicons": "^2.1.4",
     "echarts": "^5.5.0",
+    "jest": "^27.5.1",
     "prop-types": "^15.8.1",
     "react": "^17.0.0 || ^18.0.0",
     "react-apexcharts": "^1.4.1",
@@ -64,6 +64,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
+    "@testing-library/jest-dom": "^6.4.8",
     "babel-jest": "^29.7.0"
   },
   "peerDependencies": {
