@@ -75,9 +75,15 @@ export default function AdminView() {
   const handleSave = async () => {
     try {
       if (editMode) {
-        await axios.put(`http://localhost:8080/adminView/users/${selectedUser.id}`, selectedUser);
+        await axios.put(`http://localhost:8080/adminView/users/${selectedUser.id}`, selectedUser, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // Attach the token to the Authorization header
+          }});
       } else {
-        await axios.post('http://localhost:8080/adminView/users', selectedUser);
+        await axios.post('http://localhost:8080/adminView/users', selectedUser, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // Attach the token to the Authorization header
+          }});
       }
       fetchUsers();
       handleClose();
@@ -94,7 +100,10 @@ export default function AdminView() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`'http://localhost:8080/adminView/users'${id}`);
+      await axios.delete(`'http://localhost:8080/adminView/users'${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // Attach the token to the Authorization header
+        }});
       fetchUsers();
     } catch (error) {
       console.error('Error deleting user:', error);
