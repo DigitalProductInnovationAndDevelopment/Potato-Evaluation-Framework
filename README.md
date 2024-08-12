@@ -8,23 +8,24 @@
 
 - [Introduction](#introduction)
 - [Architecture](#architecture)
-  - [Overview](#overview)
-  - [Services](#services)
-  - [Tech Stack](#tech-stack)
-  - [Design Framework](#design-framework)
+    - [Overview](#overview)
+    - [Services](#services)
+    - [Tech Stack](#tech-stack)
+    - [Design Framework](#design-framework)
 - [Build & Installation](#build--installation)
-  - [Prerequisites](#prerequisites)
-  - [How To Build & Run](#how-to-build--run)
+    - [Prerequisites](#prerequisites)
+    - [How To Build & Run](#how-to-build--run)
 - [Branching Strategy](#branching-strategy)
 - [Commit Message Guidelines](#commit-message-guidelines)
+- [Pull Request Guidelines](#pull-request-guidelines)
 - [Tests and Linting](#tests-and-linting)
-  - [Running Tests](#running-tests)
-  - [Viewing Test Coverage](#viewing-test-coverage)
-  - [Linting](#linting)
-  - [Auto-fixing Linting Issues](#auto-fixing-linting-issues)
+    - [Running Tests](#running-tests)
+    - [Viewing Test Coverage](#viewing-test-coverage)
+    - [Linting](#linting)
+    - [Auto-fixing Linting Issues](#auto-fixing-linting-issues)
 - [CI/CD](#cicd)
-  - [Run Tests](#run-tests)
-  - [Publish Docker Image](#publish-docker-image)
+    - [Run Tests](#run-tests)
+    - [Publish Docker Image](#publish-docker-image)
 - [Local Development](#local-development)
 - [License](#license)
 
@@ -141,7 +142,50 @@ Commit messages should start with an imperative verb followed by a brief descrip
 - `Fix user registration error` for correcting a bug in the user registration process.
 - `Improve dashboard performance` for optimizing the performance of the dashboard.
 
-Using an imperative verb (e.g., Add, Fix, Improve) at the beginning of your commit message describes the change as a command, making it clear and consistent.
+## Pull Request Guidelines
+
+To ensure smooth collaboration and code quality, please follow these guidelines when creating a pull request:
+
+### Creating a Pull Request
+
+1. **Branching**: Create a new branch from `main` for each feature or bug fix. Use descriptive names for your branches. For example:
+    - `feature/user-authentication`
+    - `bugfix/fix-login-error`
+
+2. **Commits**: Make commits that are logically related and have meaningful messages. Follow the [Commit Message Guidelines](#commit-message-guidelines) for writing clear and concise commit messages.
+
+3. **Testing**: Ensure that all new code is covered by tests and that existing tests are not broken. Run the test suite before creating the pull request.
+
+4. **Code Review**: Before creating a pull request, review your changes and ensure that your code adheres to the project's coding standards and style. Use the linter to catch any issues.
+
+### Pull Request Description
+
+When creating a pull request, provide a clear and comprehensive description of the changes:
+
+1. **Summary**: Describe the purpose of the pull request. What issue does it address? What are the key changes?
+
+2. **Related Issues**: Link to any related issues or tasks. Use keywords like "closes", "fixes", or "resolves" followed by the issue number. For example:
+    - `Closes #123`
+    - `Fixes #456`
+
+3. **Testing**: Mention how you tested the changes and what tests were run. Include any additional testing steps if necessary.
+
+4. **Screenshots**: If applicable, include screenshots or GIFs to illustrate UI changes or improvements.
+
+### Reviewing Pull Requests
+
+1. **Review Thoroughly**: Review the code changes, test coverage, and pull request description thoroughly. Ensure that the code adheres to the project's standards and does not introduce new issues.
+
+2. **Provide Feedback**: Offer constructive feedback on code quality, style, and functionality. Be clear and specific about any requested changes or improvements.
+
+3. **Approval**: Approve the pull request once all feedback has been addressed and the changes are satisfactory. Ensure that all required checks and tests have passed.
+
+### Merging
+
+1. **Squash Commits**: If necessary, squash commits into a single commit for a cleaner history before merging.
+
+2. **Merge Strategy**: Use the "Merge" button on GitHub to merge the pull request into the `main` branch. Avoid force-pushing or rebasing unless specifically required.
+
 
 ## Tests and Linting
 
@@ -176,7 +220,6 @@ You can automatically fix some of the linting errors by running:
 ```sh
 $ yarn lint:fix
 ```
-This will attempt to fix any fixable issues in your codebase, making it easier to maintain clean and consistent code.
 
 ## CI/CD
 
