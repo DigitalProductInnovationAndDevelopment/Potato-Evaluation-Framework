@@ -32,7 +32,8 @@ function App() {
                         <div className="main-content">
                             <Routes>
                                 <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
-                                <Route path="/adminView" element={<Dashboard onLogout={handleLogout} view="admin" />} />
+                                <Route path="/admin-panel" element={<Dashboard onLogout={handleLogout} view="admin" />} />
+                                <Route path="/how-to" element={<Dashboard onLogout={handleLogout} view="how-to" />} />
                             </Routes>
                         </div>
                     </>
