@@ -8,7 +8,7 @@ import { MemoryRouter } from 'react-router-dom';
 // Mock child components
 jest.mock('../components/trackingHistory/TrackingHistory', () => () => <div>Tracking History Content</div>);
 jest.mock('../components/defectConfig/DefectConfig', () => () => <div>Defect Config Content</div>);
-jest.mock('../components/dashboard/AdminView', () => () => <div>Admin View Content</div>);
+jest.mock('../components/adminView/AdminView', () => () => <div>Admin View Content</div>);
 
 // Create a mock theme
 const theme = createTheme();

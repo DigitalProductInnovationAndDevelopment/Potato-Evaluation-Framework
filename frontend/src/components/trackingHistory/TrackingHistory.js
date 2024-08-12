@@ -58,7 +58,7 @@ export default function TrackingHistory() {
 
     return (
         <React.Fragment>
-            <Title>Tracking History</Title>
+            <Title>Statistics</Title>
 
             <Grid container spacing={2}>
                 {/* First Bar Chart: Good Potatoes and Bad Potatoes */}

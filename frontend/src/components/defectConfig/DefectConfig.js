@@ -31,8 +31,8 @@ export default function DefectConfig() {
                 const filteredData = Object.entries(data)
                     .filter(([key]) => !key.startsWith('_'))
                     .reduce((obj, [key, value]) => {
-                        // Multiply each value by 100
-                        obj[key] = value * 100;
+                        // do the conversion
+                        obj[key] = Math.round(value * 100);
                         return obj;
                     }, {});
 
