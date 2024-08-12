@@ -21,7 +21,9 @@ const SignInPage = ({ onLogin }) => {
 
                 if (response.status === 200) {
                     const token = response.data.token;
-                    localStorage.setItem('token', token); 
+                    const isAdmin = response.data.isAdmin;
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('isAdmin', isAdmin);
                     onLogin(true);
                 } else {
                     setError(response.data.message || 'Login failed');

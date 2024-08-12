@@ -1,4 +1,6 @@
 import * as React from 'react';
+import {useEffect, useState} from "react";
+
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -16,12 +18,12 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems } from './listItems';
-import TrackingHistory from '../trackingHistory/TrackingHistory';
-import DefectConfig from '../defectConfig/DefectConfig';
-import AdminView from './AdminView';
 import { Logout } from "@mui/icons-material";
 
+import TrackingHistory from '../trackingHistory/TrackingHistory';
+import DefectConfig from '../defectConfig/DefectConfig';
+import Sidebar from "../sidebar/Sidebar";
+import AdminView from '../adminView/AdminView';
 import logo from '../../logo.svg';
 
 function Copyright(props) {
@@ -87,6 +89,20 @@ const defaultTheme = createTheme();
 
 export default function Dashboard({ view, onLogout }) {
     const [open, setOpen] = React.useState(true);
+    const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin') === 'true');
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setIsAdmin(localStorage.getItem('isAdmin') === 'true');
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, []);
+
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -148,7 +164,7 @@ export default function Dashboard({ view, onLogout }) {
                     </Box>
                     <Divider />
                     <List component="nav">
-                        {mainListItems}
+                        <Sidebar isAdmin={isAdmin} />
                         <Divider sx={{ my: 1 }} />
                     </List>
                 </Drawer>
