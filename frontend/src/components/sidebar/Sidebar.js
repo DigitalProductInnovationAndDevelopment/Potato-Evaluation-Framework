@@ -16,7 +16,7 @@ export default function Sidebar ({ isAdmin })  {
             <ListItemText primary="Dashboard" />
         </ListItemButton>
         {isAdmin && (
-            <ListItemButton component={RouterLink} to="/adminView">
+            <ListItemButton component={RouterLink} to="/admin-panel">
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
