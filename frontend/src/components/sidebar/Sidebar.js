@@ -23,7 +23,7 @@ export default function Sidebar ({ isAdmin })  {
                 <ListItemText primary="Admin Panel" />
             </ListItemButton>
         )}
-        <ListItemButton>
+        <ListItemButton component={RouterLink} to={'/how-to'}>
             <ListItemIcon>
                 <SlideshowIcon />
             </ListItemIcon>

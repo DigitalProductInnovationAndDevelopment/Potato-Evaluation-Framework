@@ -25,6 +25,7 @@ import DefectConfig from '../defectConfig/DefectConfig';
 import Sidebar from "../sidebar/Sidebar";
 import AdminView from '../adminView/AdminView';
 import logo from '../../logo.svg';
+import HowTo from "../howTo/HowTo";
 
 function Copyright(props) {
     return (
@@ -183,7 +184,10 @@ export default function Dashboard({ view, onLogout }) {
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                         {view === 'admin' ? (
-                            <AdminView />) : (
+                            <AdminView />
+                        ) : view === 'how-to' ? (
+                            <HowTo />
+                        ) : (
 
                             <><Grid container spacing={3}>
                                 {/* Chart */}
