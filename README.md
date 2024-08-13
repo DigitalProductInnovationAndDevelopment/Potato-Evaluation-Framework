@@ -290,6 +290,13 @@ Ensure you have the following tools installed:
     cd ../frontend
     yarn test
     ```
+### Team Members
+
+- [Umut Ozdemir](mailto:umut.oezdemir@tum.de)
+- [Zehra Yagmur Caliskan ](mailto:ge92qeh@mytum.de)
+- [Felix Hasenmaier](mailto:felix.hasenmaier@tum.de)
+- [Mert Incesu](mailto:mert.incesu@tum.de)
+- [David Sanjaime](mailto:go73suk@mytum.de)
 
 ## License
 
