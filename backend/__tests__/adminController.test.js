@@ -107,4 +107,119 @@ describe('User Controller with Auth Middleware', () => {
             expect(res.body).toHaveProperty('message', 'Access denied. Admins only.');
         });
     });
+
+    describe('Delete User', () => {
+        let userToDelete;
+
+        beforeEach(async () => {
+            userToDelete = new User({ email: 'deleteuser@example.com', password: 'password123', isAdmin: false });
+            await userToDelete.save();
+        });
+
+        it('should allow admin to delete a user', async () => {
+            const res = await request(app)
+                .delete(`/users/${userToDelete._id}`)
+                .set('Authorization', `Bearer ${adminToken}`);
+
+            expect(res.statusCode).toBe(200);
+            expect(res.body).toHaveProperty('message', 'User deleted successfully');
+        });
+
+        it('should deny delete access to non-admin users', async () => {
+            const res = await request(app)
+                .delete(`/users/${userToDelete._id}`)
+                .set('Authorization', `Bearer ${userToken}`);
+
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toHaveProperty('message', 'Access denied. Admins only.');
+        });
+
+        it('should return 404 if the user to be deleted does not exist', async () => {
+            const nonExistentId = new mongoose.Types.ObjectId();
+            const res = await request(app)
+                .delete(`/users/${nonExistentId}`)
+                .set('Authorization', `Bearer ${adminToken}`);
+
+            expect(res.statusCode).toBe(404);
+            expect(res.body).toHaveProperty('message', 'User not found');
+        });
+    });
+
+    describe('Update User', () => {
+        let userToUpdate;
+
+        beforeEach(async () => {
+            userToUpdate = new User({ email: 'updateuser@example.com', password: 'password123', isAdmin: false });
+            await userToUpdate.save();
+        });
+
+        it('should allow admin to update a user', async () => {
+            const res = await request(app)
+                .put(`/users/${userToUpdate._id}`)
+                .set('Authorization', `Bearer ${adminToken}`)
+                .send({ email: 'updated@example.com', password: 'newpassword123', isAdmin: true });
+
+            expect(res.statusCode).toBe(200);
+            expect(res.body.email).toBe('updated@example.com');
+            expect(res.body.isAdmin).toBe(true);
+        });
+
+        it('should deny update access to non-admin users', async () => {
+            const res = await request(app)
+                .put(`/users/${userToUpdate._id}`)
+                .set('Authorization', `Bearer ${userToken}`)
+                .send({ email: 'updated@example.com', password: 'newpassword123', isAdmin: true });
+
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toHaveProperty('message', 'Access denied. Admins only.');
+        });
+
+        it('should return 404 if the user to be updated does not exist', async () => {
+            const nonExistentId = new mongoose.Types.ObjectId();
+            const res = await request(app)
+                .put(`/users/${nonExistentId}`)
+                .set('Authorization', `Bearer ${adminToken}`)
+                .send({ email: 'updated@example.com', password: 'newpassword123', isAdmin: true });
+
+            expect(res.statusCode).toBe(404);
+            expect(res.body).toHaveProperty('message', 'User not found');
+        });
+    });
+
+    describe('Get All Users', () => {
+        beforeEach(async () => {
+            // Create multiple users to test retrieval
+            await User.insertMany([
+                { email: 'user1@example.com', password: 'password123', isAdmin: false },
+                { email: 'user2@example.com', password: 'password123', isAdmin: false },
+                { email: 'admin2@example.com', password: 'password123', isAdmin: true }
+            ]);
+        });
+
+        it('should allow admin to get all users', async () => {
+            const res = await request(app)
+                .get('/users')
+                .set('Authorization', `Bearer ${adminToken}`);
+
+            expect(res.statusCode).toBe(200);
+            expect(res.body.length).toBeGreaterThan(0);
+            expect(res.body).toEqual(
+                expect.arrayContaining([
+                    expect.objectContaining({ email: 'user1@example.com' }),
+                    expect.objectContaining({ email: 'user2@example.com' }),
+                    expect.objectContaining({ email: 'admin2@example.com' })
+                ])
+            );
+        });
+
+        it('should deny access to non-admin users when getting all users', async () => {
+            const res = await request(app)
+                .get('/users')
+                .set('Authorization', `Bearer ${userToken}`);
+
+            expect(res.statusCode).toBe(403);
+            expect(res.body).toHaveProperty('message', 'Access denied. Admins only.');
+        });
+    });
+
 });
